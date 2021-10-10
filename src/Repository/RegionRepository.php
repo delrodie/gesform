@@ -18,6 +18,16 @@ class RegionRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Region::class);
     }
+	
+	public function liste()
+	{
+		return $this->createQueryBuilder('r');
+	}
+	
+	public function listeActive()
+	{
+		return $this->createQueryBuilder('r')->where('r.id BETWEEN 4 AND 18');
+	}
 
     // /**
     //  * @return Region[] Returns an array of Region objects

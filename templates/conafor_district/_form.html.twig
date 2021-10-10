@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+<div class="row form-group">
+    <div class="col-12 mt-3">{{ form_row(form.region) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.nom) }}</div>
+</div>
+<div class="row pull-right">
+    <div class="col mt-3">
+        {{ form_widget(form) }}
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+</div>
+
+{{ form_end(form) }}
