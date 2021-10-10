@@ -44,16 +44,16 @@
         </div>
         <div class="navbar d-none d-sm-block">
             <ul>
-                <li><a href="#" class="las la-home" data-text="Accueil"></a></li>
-                <li><a href="formulaire.html" class="las la-save" data-text="Inscription"></a></li>
+                <li><a href="{{ absolute_url(path('app_home')) }}" class="las la-home" data-text="Accueil"></a></li>
+                <li><a href="#" onclick="recherche()" class="las la-save" data-text="Inscription"></a></li>
                 <li><a href="#" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
                 <li><a href="#" class="las la-file-alt" data-text="Fiche"></a></li>
             </ul>
         </div>
         <div class="footer d-block d-sm-none">
             <ul>
-                <li><a href="#" class="las la-home" data-text="Accueil"></a></li>
-                <li><a href="formulaire.html" class="las la-save" data-text="Inscription"></a></li>
+                <li><a href="{{ absolute_url(path('app_home')) }}" class="las la-home" data-text="Accueil"></a></li>
+                <li><a href="#" onclick="recherche()" class="las la-save" data-text="Inscription"></a></li>
                 <li><a href="#" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
                 <li><a href="#" class="las la-file-alt" data-text="Fiche"></a></li>
             </ul>
@@ -78,7 +78,6 @@
                         cancelButtonText: 'Annuler',
                         footer: '<a href="#">J\'ai oublié mon matricule</a>',
                         preConfirm: (matricule) => {
-                            //return fetch(`//api.github.com/users/${login}`)
                             return fetch(`{{ absolute_url(path('app_home')) }}ajax/${matricule}`)
                                     .then(response => {
                                         if (!response.ok) {
@@ -107,10 +106,10 @@
                                     footer: '<a href="{{ absolute_url(path('app_home')) }}">J\'ai oublié mon matricule</a>'
                                 })
                             }else{
-                                console.log(donnee.matricule)
+                                console.log(donnee)
                                 //dump();
                                 //window.location = "http://adhesion.scoutascci.org/";
-                                window.location = "{{ absolute_url(path('app_home')) }}recherche/"+ donnee.slug;
+                                window.location = "{{ absolute_url(path('app_home')) }}inscription/"+ donnee.slug;
                             }
                         }
                     })

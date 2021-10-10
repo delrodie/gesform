@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello InscriptionController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col etape" data-aos="flip-right"data-aos-duration="3000">
+            <h2>Candidature</h2>
+            <p>
+                Votre candidature va se dérouler en 5 étapes dont la première concerne les informations scoutes.
+                La date d'entrée et votre photo scoute sont obligatoires. <br>
+                <strong><em>Notez qu'il faudrait obligatoirement achever les 5 étapes pour la validation de votre candidature.</em></strong>
+            </p>
+            <ul>
+                <li class="active"><a href="#" data-text="Infos scoutes" class="active">1</a></li>
+                <li><a href="#" data-text="Infos professionnelles">2</a></li>
+                <li><a href="#" data-text="Formations stages">3</a></li>
+                <li><a href="#" data-text="Formateurs">4</a></li>
+                <li><a href="#" data-text="Validation">5</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row formulaire" data-aos="zoom-in" data-aos-duration="3000">
+        <div class="col">
+            <h4>Infos scoutes</h4>
+            <form action="{{ path('app_inscription', {'slug': scout.slug}) }}" method="post" enctype="multipart/form-data">
+                <div class="row form-group">
+                    <div class="col-md-4 mt-3">
+                        <label for="scoute">Matricule</label>
+                        <input type="text" class="form-control" name="scout_matricule" value="{{ scout.matricule }}" readonly>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Nom</label>
+                        <input type="text" class="form-control" name="scout_nom" value="{{ scout.nom }}" readonly>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Prenoms</label>
+                        <input type="text" class="form-control" name="scout_prenoms" value="{{ scout.prenoms }}" readonly>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Date de naissance</label>
+                        <input type="text" class="form-control" value="{{ scout.datenaissance }}" readonly>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Lieu de naissance</label>
+                        <input type="text" class="form-control" value="{{ scout.lieunaissance }}" readonly>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Carte scoute</label>
+                        <input type="text" class="form-control" value="{{ scout.carte }}" readonly>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <label for="">Region</label>
+                        <input type="text" class="form-control" value="{{ scout.groupe.district.region.nom }}" readonly>
+                    </div>
+                    <div class="col-md-6 mt-3">
+                        <label for="">Fonction</label>
+                        <input type="text" class="form-control" value="{{ scout.fonction }}" readonly>
+                    </div>
+                    <div class="col-md-3 mt-3">
+                        <label for="">Date d'entrée <span style="color: red; font-weight:bold; font-size: 1.2rem;">*</span></label>
+                        <select name="scout_date_entree" id="" class="form-control date" required>
+
+                        </select>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Photo scoute <span style="color: red; font-weight:bold; font-size: 1.2rem;">*</span></label>
+                        <input type="file" class="dropify-fr" name="scout_photo" required data-preview=".preview">
+                    </div>
+                </div>
+                <div class="row text-center bouton-submit" data-aos="fade-up"data-aos-duration="1500">
+                    <input type="hidden" name="scout_slug" value="{{ scout.slug }}">
+                    <div class="col mt-5">
+                        <a href="#" class="btn btn-outline-secondary">
+                            <i class="las la-undo-alt"></i>
+                            Annuler
+                        </a>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="las la-angle-double-right"></i>
+                            Suivant
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/vendor/dropify/css/dropify.min.css')) }}">
+    <style>
+        .dropify-fr{
+            font-size: .4rem;
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ absolute_url(asset('assets/vendor/dropify/js/dropify.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('assets/vendor/dropify/js/init.js')) }}"></script>
+{% endblock %}
