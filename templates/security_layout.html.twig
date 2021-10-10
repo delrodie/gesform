@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}ASCCI{% endblock %}</title>
+
+        <meta name="keywords" content="SCOUT, OMMS, ASCCI, scoutisme, abidjan, cote d'ivoire, paroisse, diocese, adhesion, inscription"  />
+        <meta name="description" content="Espace administrateur SYGESCA" />
+        <meta name="Author" content="PIT, Delrodie AMOIKON">
+        <meta name="Copyright" content="www.scoutascci.org">
+        <meta name="Content-Language" content="FR">
+        <link rel="canonical" href="{{ absolute_url(path('app_home')) }}" />
+        <meta property="og:locale" content="fr_FR" />
+        <meta property="og:type" content="Item" />
+        <meta property="og:title" content="Espace administrateur SYGESCA" />
+        <meta property="og:description" content="Adhesion 2021-2022 à l'Association des Scouts Catholiques de Côte d'Ivoire" />
+        <meta property="og:url" content="{{ absolute_url(path('app_home')) }}" />
+        <meta property="og:site_name" content="ASCCI" />
+        <meta property="og:image" content="{{ absolute_url(asset('assets/images/ascci.png')) }}" />
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:description" content="Adhesion 2021-2022 à l'Association des Scouts Catholiques de Côte d'Ivoire"/>
+        <meta name="twitter:title" content="Espace administrateur SYGESCA"/>
+        <meta name="twitter:domain" content="ASCCI"/>
+        <meta name="twitter:image:src" content="{{ absolute_url(asset('assets/images/ascci.png')) }}"/>
+
+        <link rel="shortcut icon" href="{{ absolute_url(asset('assets/images/ascci.png')) }}">
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ absolute_url(asset('backend/css/login.css')) }}">
+        {% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+    </body>
+</html>
