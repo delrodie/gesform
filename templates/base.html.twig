@@ -1,19 +1,121 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ASCCI{% endblock %}</title>
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
+    <meta name="keywords" content="SCOUT, OMMS, ASCCI, scoutisme, abidjan, cote d'ivoire, formation, CONAFOR, adhesion, inscription"  />
+    <meta name="description" content="Inscription aux formations 2021-2022 à l'Association des Scouts Catholiques de Côte d'Ivoire" />
+    <meta name="Author" content="PIT, Delrodie AMOIKON">
+    <meta name="Copyright" content="www.scoutascci.org">
+    <meta name="Content-Language" content="FR">
+    <link rel="canonical" href="{{ absolute_url(path('app_home')) }}" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:type" content="Item" />
+    <meta property="og:title" content="Droit de participation au    camp de formation de l'ASCCI - Association des Scouts Catholiques de Côte d'Ivoire" />
+    <meta property="og:description" content="Inscription aux formations 2021-2022 à l'Association des Scouts Catholiques de Côte d'Ivoire" />
+    <meta property="og:url" content="{{ absolute_url(path('app_home')) }}" />
+    <meta property="og:site_name" content="ASCCI" />
+    <meta property="og:image" content="{{ absolute_url(asset('assets/images/ascci.png')) }}" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:description" content="Inscription aux formations 2021-2022 à l'Association des Scouts Catholiques de Côte d'Ivoire"/>
+    <meta name="twitter:title" content="Droit de participation au camp de formation de l'ASCCI - Association des Scouts Catholiques de Côte d'Ivoire"/>
+    <meta name="twitter:domain" content="ASCCI"/>
+    <meta name="twitter:image:src" content="{{ absolute_url(asset('assets/images/ascci.png')) }}"/>
+
+    <link rel="shortcut icon" href="{{ absolute_url(asset('assets/images/ascci.png')) }}">
+
+    {% block stylesheets %}
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css"/>
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/style.css')) }}">
+        <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/responsive.css')) }}">
+    {% endblock %}
+
+</head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="wrapper">
+            <div class="container content">
+                {% block body %}{% endblock %}
+
+            </div>
+        </div>
+        <div class="navbar d-none d-sm-block">
+            <ul>
+                <li><a href="#" class="las la-home" data-text="Accueil"></a></li>
+                <li><a href="formulaire.html" class="las la-save" data-text="Inscription"></a></li>
+                <li><a href="#" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
+                <li><a href="#" class="las la-file-alt" data-text="Fiche"></a></li>
+            </ul>
+        </div>
+        <div class="footer d-block d-sm-none">
+            <ul>
+                <li><a href="#" class="las la-home" data-text="Accueil"></a></li>
+                <li><a href="formulaire.html" class="las la-save" data-text="Inscription"></a></li>
+                <li><a href="#" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
+                <li><a href="#" class="las la-file-alt" data-text="Fiche"></a></li>
+            </ul>
+        </div>
+        {% block javascripts %}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"  async defer></script>
+            <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+            <script src="{{ absolute_url(asset('assets/js/app.js')) }}"></script>
+            <script>
+                function recherche() {
+                    Swal.fire({
+                        title: 'Entre ton matricule',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: '<i class="fas fa-search"></i> Valider',
+                        inputPlaceholder: 'Entre ton matricule',
+                        showLoaderOnConfirm: true,
+                        cancelButtonText: 'Annuler',
+                        footer: '<a href="#">J\'ai oublié mon matricule</a>',
+                        preConfirm: (matricule) => {
+                            //return fetch(`//api.github.com/users/${login}`)
+                            return fetch(`{{ absolute_url(path('app_home')) }}ajax/${matricule}`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(response.statusText)
+                                        }
+                                        let matricule = response.matricule;
+                                        console.log(matricule)
+                                        return response.json()
+
+                                    })
+                                    .catch(error => {
+                                        Swal.showValidationMessage(
+                                                `Demande échouée: ${error}`
+                                        )
+                                    })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let donnee = result.value
+                            if (!donnee){
+                                Swal.fire({
+                                    title: 'Echec!',
+                                    text: 'Le matricule entré n\'existe pas. Prière reprendre',
+                                    icon: 'error',
+                                    footer: '<a href="{{ absolute_url(path('app_home')) }}">J\'ai oublié mon matricule</a>'
+                                })
+                            }else{
+                                console.log(donnee.matricule)
+                                //dump();
+                                //window.location = "http://adhesion.scoutascci.org/";
+                                window.location = "{{ absolute_url(path('app_home')) }}recherche/"+ donnee.slug;
+                            }
+                        }
+                    })
+                }
+            </script>
+        {% endblock %}
     </body>
 </html>

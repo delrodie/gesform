@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Droit de participation au camp de formation{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h2>ASCCI</h2>
+            <h1 data-aos="flip-right"data-aos-duration="1500">GNEKPA 2021</h1>
+            <div class="row description">
+                <div class="col-md-9"  data-aos="flip-right" data-aos-duration="1500">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste consequuntur enim beatae obcaecati consectetur culpa explicabo, sapiente, hic quidem delectus voluptatum aliquam dolore dolor asperiores ipsum veritatis, impedit alias corporis.
+                    </p>
+                </div>
+                <div class="col-md-3 text-center" data-aos="zoom-in" data-aos-easing="linear"
+                     data-aos-duration="1500">
+                    <img src="{{ absolute_url(asset('assets/images/ascci.png')) }}" alt="Logo ASCCI" class="img-fluid">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col bouton">
+                    <a href="#" class="btn btn-primary btn-lg" data-aos="fade-right" data-aos-duration="1500">
+                        <i class="las la-save"></i>
+                        S'inscrire
+                    </a>
+                    <a href="#" class="btn btn-outline-danger btn-lg" data-aos="fade-left" data-aos-duration="3000">
+                            <i class="las la-hand-holding-usd "></i>
+                    Paiements
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

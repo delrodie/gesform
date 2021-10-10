@@ -1,0 +1,151 @@
+:root {
+  --main-bg-color: #009d63;
+  --main-text-color: #009d63;
+  --second-text-color: #bbbec5;
+  --second-bg-color: #c1efde;
+  --orange: #FF4D00;
+  --vert: #3DAE2B;
+  --bleu: #001689;
+  --gris: #98989A;
+  --louveteau: yellow;
+  --cheminot: orange;
+  --routier: red;
+  --eclaireur: green;
+}
+.branche i{
+  color: var(--bleu);
+}
+.bg-eclaireur{
+  background: var(--eclaireur);
+}
+.bg-louveteau{
+  background: var(--louveteau);
+}
+.bg-cheminot{
+  background: var(--cheminot);
+}
+.bg-routier{
+  background: var(--routier);
+}
+.white-text{
+  color: white;
+}
+.primary-text {
+  color: var(--main-text-color);
+}
+
+.second-text {
+  color: var(--second-text-color);
+}
+
+.primary-bg {
+  background-color: var(--main-bg-color);
+}
+
+.secondary-bg {
+  background-color: var(--second-bg-color);
+}
+
+.rounded-full {
+  border-radius: 100%;
+}
+
+#wrapper {
+  overflow-x: hidden;
+  background: rgb(243, 240, 240);
+}
+
+#sidebar-wrapper {
+  min-height: 100vh;
+  margin-left: -15rem;
+  -webkit-transition: margin 0.25s ease-out;
+  -moz-transition: margin 0.25s ease-out;
+  -o-transition: margin 0.25s ease-out;
+  transition: margin 0.25s ease-out;
+  background: var(--bleu);
+}
+
+#sidebar-wrapper .sidebar-heading {
+  padding: 0.875rem 1.25rem;
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 15rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#menu-toggle {
+  cursor: pointer;
+}
+
+.list-group-item {
+  border: none;
+  padding: 20px 30px;
+}
+
+.list-group-item.active {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  border: none;
+}
+
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+}
+
+.profile img{
+  float: left;
+  padding-right: 15px;
+  max-width: 150px;
+  border-radius: 100%;
+}
+.profile-informations .donnees{
+  font-weight: bold;
+}
+.profile-informations .donnees a{
+  text-decoration: none;
+  color: var(--bleu);
+}
+.profile-informations .donnees a:hover{
+  text-decoration: none;
+  color: var(--vert);
+}
+
+.statistiques .card-title{
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--bleu);
+}
+.statistiques .card-title i{
+  float: right;
+}
+.tableau-liste table{
+  font-size: 0.8rem;
+}
+.sygesca h5{
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  color: var(--gris);
+  font-weight: bold;
+}

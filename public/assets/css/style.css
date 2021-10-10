@@ -1,0 +1,225 @@
+*{
+    margin: 0;padding: 0;
+    box-sizing: border-border-box;
+}
+:root{
+    --orange: #FF4D00;
+    --vert: #3DAE2B;
+    --bleu: #001689;
+    --gris: #98989A
+}
+body{
+    background-image: url('../images/fond.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-family: Helvetica;
+}
+.navbar{
+    position: fixed;
+    top: 0;left: 0;
+    height: 100%;
+    width: 80px;
+    margin: 0;padding: 0;
+}
+.footer{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.navbar ul,
+.footer ul{
+    height: 100%;
+    width: 100%;
+    background: #010A4C;
+    display: flex;
+    align-items: center;
+    flex-flow: column wrap;
+    padding-top: 150px;
+    list-style-type: none;
+}
+.navbar ul li,
+.footer ul li{
+    height: 60px;
+    width: 60px;
+    margin-top: 5px;
+    text-align: center;
+    position: relative;
+    margin-left: -30px;
+}
+.navbar ul li a,
+.footer ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    line-height: 50px;
+    cursor: pointer;
+    transition: .2s ease-out;
+}
+.navbar ul li:hover > a,
+.footer ul li:hover > a{
+    color: orangered;
+}
+.navbar ul li:before,
+.footer ul li:before{
+    content: '';
+    position: absolute;
+    bottom: 0;left: 0;
+    height: 5px; 
+    width: 100%;
+    box-shadow: 0 0 7px #010735 inset;
+}
+.navbar ul li a:after,
+.footer ul li a:after{
+    content: attr(data-text);
+    position: absolute;
+    left: 80px;top: -10px;
+    background: #010735;
+    color: white;
+    border-radius: 50px;
+    padding: 5px 15px;
+    font-family: helvetica;
+    font-weight: normal;
+    display: none;
+}
+.navbar ul li:after,
+.footer ul li:after{
+    content: '';
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    right: -30px;top: 13px;
+    background: #010735;
+    transform: rotateZ(45deg);
+    display: none;
+}
+.navbar ul li:hover:after,
+.footer ul li:hover:after{
+    display: block;
+}
+.navbar ul li:hover a:after,
+.footer ul li:hover a:after{
+    display: block;
+}
+
+.content{
+    position: relative;
+    margin: 150px auto 0 auto;
+    padding: 0 50px;
+}
+h1, h2, h3, h4, h5, h6{
+    font-weight: bold;
+}
+h2{
+    color: var(--orange);
+}
+h1{
+    color: var(--vert);
+}
+h4{
+    color: var(--orange);
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+.description{
+    display: flex;
+    align-items: center;
+}
+.description p{
+    text-align: justify; ;
+}
+.bouton{
+    text-align: center;
+    margin: 30px auto;
+}
+
+
+.etape ul{
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    text-align: center;
+    padding-top: 25px;
+}
+.etape ul li{
+   float: left; 
+    text-align: center;
+}
+.etape ul li{
+    background: var(--gris); 
+    width: 100%;
+}
+.etape ul li.active{
+    background: var(--orange);
+}
+.etape ul li a{
+    text-decoration: none;
+    background:var(--gris);
+    padding: 10px;
+    border-radius: 100%;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+}
+.etape ul li a.active{
+    background: var(--orange);
+}
+
+.etape ul li a:after{
+    content: attr(data-text);
+    position: absolute;
+    background: #001689;
+    color: white;
+    border-radius: 50px;
+    padding: 5px 20px;
+    font-family: helvetica;
+    font-weight: normal;
+    display: none;
+}
+.etape ul li:after{    
+    content: '';
+    height: 15px;
+    width: 15px;
+    position: absolute;
+    background: #001689;
+    transform: rotateZ(45deg);
+    display: none;
+}
+.etape ul li:hover:after,
+.etape ul li:hover a:after{
+    display: block;
+}
+
+.formulaire{
+    padding: 30px 0 50px 0;
+    font-size: .9rem;
+}
+.formulaire input,
+.formulaire select{
+    font-weight: 600;
+    color: var(--bleu);
+    font-size: 0.9rem;
+}
+.bouton-submit .btn:hover i{
+    transform: rotate(315deg);
+    font-weight: bold;
+}
+.formulaire form{
+    border-left: solid 5px var(--orange);
+}
+.formulaire .form-group{
+    padding-left: 25px;
+}
+.etape ul{
+    text-align: center;
+}
+.montant{
+    font-size: .9rem;
+}
+.montant #montant_adhesion{
+    font-weight: bold;
+    font-size: 1.4rem;
+}
