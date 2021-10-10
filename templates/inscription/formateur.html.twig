@@ -1,29 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} Candidature formations en tant stagiaire{% endblock %}
+{% block title %}{{ parent() }} Candidature formations en tant formateur{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col etape" data-aos="flip-right"data-aos-duration="3000">
             <h2>Candidature</h2>
             <p>
-                Votre candidature va se dérouler en 5 étapes dont la troisième concerne les formations assistées en tant que stagiaire.
+                Votre candidature va se dérouler en 5 étapes dont la quatrième concerne les formations assistées en tant que formateur.
                 Tous les champs sont obligatoires. <br>
                 <strong><em>Notez qu'il faudrait obligatoirement achever les 5 étapes pour la validation de votre candidature.</em></strong>
             </p>
             <ul>
                 <li><a href="#" data-text="Infos scoutes">1</a></li>
                 <li><a href="#" data-text="Infos professionnelles">2</a></li>
-                <li class="active"><a href="#" data-text="Formations stages" class="active">3</a></li>
-                <li><a href="#" data-text="Formateurs">4</a></li>
+                <li><a href="#" data-text="Formations stages">3</a></li>
+                <li class="active"><a href="#" data-text="Formateurs" class="active">4</a></li>
                 <li><a href="#" data-text="Validation">5</a></li>
             </ul>
         </div>
     </div>
     <div class="row formulaire" data-aos="zoom-in" data-aos-duration="3000">
         <div class="col">
-            <h4>Stagiaire</h4>
-            <form action="{{ path('app_inscription_formation_stagiaire', {'slug': candidat.slug}) }}" method="post" enctype="multipart/form-data">
+            <h4>Formateur</h4>
+            <form action="{{ path('app_inscription_formation_formateur', {'slug': candidat.slug}) }}" method="post" enctype="multipart/form-data">
 
                 <div class="row form-group">
                     <div class="col-md-6 mt-3">
@@ -82,20 +82,18 @@
                     </div>
                 </div>
                 {% endif%}
-                {% if formations|length > 1 %}
-                    <div class="row text-center bouton-submit" data-aos="fade-up"data-aos-duration="1500">
-                        <div class="col mt-5">
-                            <a href="{{ absolute_url(path('app_inscription',{"slug": candidat.slug})) }}" class="btn btn-outline-secondary">
-                                <i class="las la-angle-double-left"></i>
-                                Précédent
-                            </a>
-                            <a href="{{ path('app_inscription_formation_formateur', {'slug': candidat.slug}) }}" class="btn btn-primary">
-                                <i class="las la-angle-double-right"></i>
-                                Suivant
-                            </a>
-                        </div>
+                <div class="row text-center bouton-submit" data-aos="fade-up"data-aos-duration="1500">
+                    <div class="col mt-5">
+                        <a href="{{ absolute_url(path('app_inscription',{"slug": candidat.slug})) }}" class="btn btn-outline-secondary">
+                            <i class="las la-angle-double-left"></i>
+                            Précédent
+                        </a>
+                        <a href="#" class="btn btn-primary">
+                            <i class="las la-angle-double-right"></i>
+                            Suivant
+                        </a>
                     </div>
-                {% endif %}
+                </div>
 
             </form>
         </div>

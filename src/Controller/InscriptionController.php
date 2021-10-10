@@ -73,12 +73,39 @@ class InscriptionController extends AbstractController
 		$candidat = $this->getDoctrine()->getRepository(Candidat::class)->findOneBy(['slug'=>$slug]);
 		
 		if ($request->get('scout_slug') === $slug){
-			$personnelle = $this->_candidature->stagiaire($request, $candidat);
+			$data=[
+				'type' => "STAGIAIRE",
+				'flag' => 3
+			];
+			$personnelle = $this->_candidature->formation($request, $candidat,$data);
 		}
 		
-		$formations = $this->formationRepository->findBy(['candidat'=>$candidat->getId()], ['id'=>"DESC"]);
+		$formations = $this->formationRepository->findBy(['candidat'=>$candidat->getId(), 'type'=>"STAGIAIRE"], ['id'=>"DESC"]);
 		
 		return $this->render('inscription/stagiaire.html.twig',[
+			'candidat' => $candidat,
+			'formations' => $formations
+		]);
+	}
+	
+	/**
+	 * @Route("/formation/{slug}/formateur", name="app_inscription_formation_formateur", methods={"GET","POST"})
+	 */
+	public function formateur(Request $request, $slug)
+	{
+		$candidat = $this->getDoctrine()->getRepository(Candidat::class)->findOneBy(['slug'=>$slug]);
+		
+		if ($request->get('scout_slug') === $slug){
+			$data=[
+				'type' => "FORMATEUR",
+				'flag' => 4
+			];
+			$personnelle = $this->_candidature->formation($request, $candidat,$data);
+		}
+		
+		$formations = $this->formationRepository->findBy(['candidat'=>$candidat->getId(), 'type'=>"FORMATEUR"], ['id'=>"DESC"]);
+		
+		return $this->render('inscription/formateur.html.twig',[
 			'candidat' => $candidat,
 			'formations' => $formations
 		]);

@@ -75,7 +75,7 @@
 			return $candidat;
 		}
 		
-		public function stagiaire($request, $candidat)
+		public function formation($request, $candidat, $data)
 		{
 			$mediaFile = $request->files->get('scout_stagiaire_media');
 			$media = null;
@@ -85,7 +85,7 @@
 			$formation = new Formation();
 			$formation->setCandidat($candidat);
 			$formation->setMedia($media);
-			$formation->setType('STAGIAIRE');
+			$formation->setType($data['type']);
 			$formation->setNom($this->validForm($request->get('scout_stagiaire_nom')));
 			$formation->setDate($this->validForm($request->get('scout_stagiaire_date')));
 			$formation->setLieu($this->validForm($request->get('scout_stagiaire_lieu')));
@@ -96,7 +96,7 @@
 			
 			$formations = $this->_em->getRepository(Formation::class)->findBy(['candidat'=>$candidat->getId()]);
 			if (count($formations) > 1){
-				$candidat->setFlag(3);
+				$candidat->setFlag($data['flag']);
 				$this->_em->flush();
 			}
 			
