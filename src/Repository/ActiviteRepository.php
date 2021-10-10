@@ -18,6 +18,17 @@ class ActiviteRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Activite::class);
     }
+	
+	public function findEncours($date)
+	{
+		return $this
+			->createQueryBuilder('a')
+			->where(':date BETWEEN a.debutPeriode AND a.finPeriode')
+			->setParameter('date', $date)
+			->setMaxResults(1)
+			->getQuery()->getOneOrNullResult()
+			;
+	}
 
     // /**
     //  * @return Activite[] Returns an array of Activite objects
