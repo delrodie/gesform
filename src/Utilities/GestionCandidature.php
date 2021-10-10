@@ -4,6 +4,7 @@
 	
 	use App\Entity\Candidat;
 	use App\Entity\Sygesca\Membre;
+	use App\Entity\Sygesca\Region;
 	use Doctrine\ORM\EntityManagerInterface;
 	
 	class GestionCandidature
@@ -17,13 +18,19 @@
 			$this->_photo = $_photo;
 		}
 		
-		public function formulaire($request,$scout)
+		/**
+		 * @param $request
+		 * @param $scout
+		 * @return Candidat
+		 */
+		public function formulaire($request,$scout): Candidat
 		{
 			$mediaFile = $request->files->get('scout_photo');
 			$media = null;
 			if ($mediaFile)
 				$media = $this->_photo->upload($mediaFile, 'photo');
 			
+			$region = $this->_em->getRepository(Region::class)->findOneBy(['id'=>$scout->getGroupe()->getDistrict()->getRegion()->getId()]);
 			
 			$candidat = new Candidat();
 			$candidat->setMatricule($scout->getMatricule());
@@ -35,15 +42,30 @@
 			$candidat->setFonction($scout->getFonction());
 			$candidat->setSexe($scout->getSexe());
 			$candidat->setSlug($scout->getSlug());
-			$candidat->setRegion($scout->getGroupe()->getDistrict()->getRegion());
-			$candidat->setDateEntree($request->get('scout_date_entree'));
+			$candidat->setRegion($region);
+			$candidat->setDateEntree($this->validForm($request->get('scout_date_entree')));
 			$candidat->setPhoto($media);
+			$candidat->setFlag(1);
 			
 			$this->_em->persist($candidat);
 			$this->_em->flush();
 			
 			return $candidat;
 			
+		}
+		
+		public function personnelle($request, $candidat)
+		{
+			$candidat->setNiveauEtude($this->validForm($request->get('scout_niveau_etude')));
+			$candidat->setProfession($this->validForm($request->get('scout_profession')));
+			$candidat->setResidence($this->validForm($request->get('scout_residence')));
+			$candidat->setemail($this->validForm($request->get('scout_email')));
+			$candidat->setContact($this->validForm($request->get('scout_contact')));
+			$candidat->setFlag(2);
+			
+			$this->_em->flush();
+			
+			return $candidat;
 		}
 		
 		

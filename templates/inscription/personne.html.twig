@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Candidature infos personnelles{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col etape" data-aos="flip-right"data-aos-duration="3000">
+            <h2>Candidature</h2>
+            <p>
+                Votre candidature va se dérouler en 5 étapes dont la première concerne les informations personnelles.
+                Tous les champs sont obligatoires. <br>
+                <strong><em>Notez qu'il faudrait obligatoirement achever les 5 étapes pour la validation de votre candidature.</em></strong>
+            </p>
+            <ul>
+                <li><a href="#" data-text="Infos scoutes">1</a></li>
+                <li class="active"><a href="#" data-text="Infos professionnelles" class="active">2</a></li>
+                <li><a href="#" data-text="Formations stages">3</a></li>
+                <li><a href="#" data-text="Formateurs">4</a></li>
+                <li><a href="#" data-text="Validation">5</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row formulaire" data-aos="zoom-in" data-aos-duration="3000">
+        <div class="col">
+            <h4>Infos personnelles</h4>
+            <form action="{{ path('app_inscription_personnelle', {'slug': candidat.slug, 'id':candidat.id}) }}" method="post" enctype="multipart/form-data">
+                <div class="row form-group">
+                    <div class="col-md-4 mt-3">
+                        <label for="scoute">Niveau d'étude</label>
+                        <select name="scout_niveau_etude" id="scoutNiveauEtude" class="form-control">
+                            <option value="">--</option>
+                            <option value="PREMIER CYCLE">PREMIER CYCLE</option>
+                            <option value="SECOND CYCLE">SECOND CYCLE</option>
+                            <option value="BAC+1">BAC+1</option>
+                            <option value="BAC+2">BAC+2</option>
+                            <option value="BAC+2">BAC+2</option>
+                            <option value="BAC+3">BAC+3</option>
+                            <option value="BAC+4">BAC+4</option>
+                            <option value="BAC+5">BAC+5</option>
+                            <option value="BAC+6">BAC+6</option>
+                            <option value="BAC+7 +">BAC+7 +</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Profession</label>
+                        <input type="text" class="form-control" name="scout_profession" autocomplete="off" required>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Résidence</label>
+                        <input type="text" class="form-control" name="scout_residence" autocomplete="off" required>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Email</label>
+                        <input type="email" class="form-control" name="scout_email" autocomplete="off" required>
+                    </div>
+                    <div class="col-md-4 mt-3">
+                        <label for="">Contact</label>
+                        <input type="text" class="form-control" name="scout_contact" autocomplete="off" required>
+                    </div>
+                </div>
+                <div class="row text-center bouton-submit" data-aos="fade-up"data-aos-duration="1500">
+                    <input type="hidden" name="scout_slug" value="{{ candidat.slug }}">
+                    <div class="col mt-5">
+                        <a href="{{ absolute_url(path('app_inscription',{"slug": candidat.slug})) }}" class="btn btn-outline-secondary">
+                            <i class="las la-angle-double-left"></i>
+                            Précédent
+                        </a>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="las la-angle-double-right"></i>
+                            Suivant
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

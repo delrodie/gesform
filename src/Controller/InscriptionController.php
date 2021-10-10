@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidat;
 use App\Entity\Sygesca\Membre;
 use App\Utilities\GestionCandidature;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,9 +31,30 @@ class InscriptionController extends AbstractController
 	
 	    if ($request->get('scout_slug') === $slug){
 			$candidat = $this->_candidature->formulaire($request, $scout);
+			
+			return $this->redirectToRoute('app_inscription_personnelle',[
+				'slug' => $candidat->getSlug()
+			]);
 		}
 	    return $this->render('inscription/index.html.twig', [
             'scout' => $scout,
         ]);
     }
+	
+	/**
+	 * @Route("/{slug}/s", name="app_inscription_personnelle", methods={"GET","POST"})
+	 */
+	public function personnelle(Request $request, $slug)
+	{
+		$candidat = $this->getDoctrine()->getRepository(Candidat::class)->findOneBy(['slug'=>$slug]);
+		
+		if ($request->get('scout_slug') === $slug){
+			$personnelle = $this->_candidature->personnelle($request, $candidat);
+			dd($personnelle);
+		}
+		
+		return $this->render('inscription/personne.html.twig',[
+			'candidat' => $candidat
+		]);
+	}
 }
