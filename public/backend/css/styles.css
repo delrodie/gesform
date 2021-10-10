@@ -149,3 +149,17 @@
   color: var(--gris);
   font-weight: bold;
 }
+.table-responsive{
+  overflow-x: auto;
+  width: 100%;
+  margin: auto 0;
+}
+
+.valide i{
+  color: var(--eclaireur);
+  font-size: 1rem;
+}
+.non-valide i{
+  color: var(--routier);
+  font-size: 1rem;
+}

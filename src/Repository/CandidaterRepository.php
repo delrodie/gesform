@@ -18,6 +18,54 @@ class CandidaterRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Candidater::class);
     }
+	
+	/**
+	 * Liste des candidatures
+	 *
+	 * @param null $validation
+	 * @param null $activite
+	 * @return int|mixed|string
+	 */
+	public function findByValidationAndActiviteOrNo($validation=null, $activite=null)
+	{ //dd($validation);
+		$query = $this->createQueryBuilder('c')
+			->addSelect('ca')
+			->addSelect('a')
+			->addSelect('r')
+			->leftJoin('c.candidat', 'ca')
+			->leftJoin('c.activite', 'a')
+			->leftJoin('ca.region', 'r')
+			;
+		if ($activite){
+			$query->where('a.id = :activite')
+				->andWhere('c.validation = :validation')
+				->setParameters([
+					'activite'=> $activite,
+					'validation' => $validation
+				]);
+		}elseif ($validation){
+			$query->where('c.validation = :validation')
+				->setParameter('validation', $validation);
+		}
+		return $query->getQuery()->getResult();
+	}
+	
+	public function findOneById($candidater)
+	{
+		return $this
+			->createQueryBuilder('c')
+			->addSelect('a')
+			->addSelect('ca')
+			->addSelect('r')
+			->leftJoin('c.activite', 'a')
+			->leftJoin('c.candidat', 'ca')
+			->leftJoin('ca.region', 'r')
+			->where('c.id = :candidater')
+			->setParameter('candidater', $candidater)
+			->setMaxResults(1)
+			->getQuery()->getOneOrNullResult()
+			;
+	}
 
     // /**
     //  * @return Candidater[] Returns an array of Candidater objects
