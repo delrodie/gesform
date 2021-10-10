@@ -1,0 +1,26 @@
+{{ form_start(form) }}
+<div class="row form-group" id="activite">
+    <div class="col-12 mt-3">{{ form_row(form.code) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.nom) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.description) }}</div>
+    <div class="col-12 mt-3">{{ form_row(form.montant) }}</div>
+    <div class="col-12 mt-3 input-group periode">
+        {{ form_widget(form.debutActivite) }}
+        <span class="input-group-text">au</span>
+        {{ form_widget(form.finActivite) }}
+    </div>
+    <div class="col-12 mt-3 input-group periode">
+        {{ form_widget(form.debutPeriode) }}
+        <span class="input-group-text">au</span>
+        {{ form_widget(form.finPeriode) }}
+    </div>
+</div>
+<div class="row form-group">
+    <div class="col-12 text-right mt-5" style="text-align: right">
+        {{ form_widget(form) }}
+        <a href="{{ path('conafor_activite_index') }}" class="btn btn-outline-secondary">Annuler</a>
+        <button class="btn btn-primary">{{ button_label|default('Enregistrer') }}</button>
+    </div>
+</div>
+
+{{ form_end(form) }}
