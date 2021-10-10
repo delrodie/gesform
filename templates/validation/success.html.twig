@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} Candidature{% endblock %}
+
+{% block body %}
+	<div class="row">
+		<div class="col etape" data-aos="flip-right"data-aos-duration="3000">
+			<h2>Candidature</h2>
+			<p>
+				<strong><em>FE-LI-CI-TA-TIONS vous avez suivi tout le processus</em></strong>
+			</p>
+			<ul>
+				<li><a href="#" data-text="Infos scoutes">1</a></li>
+				<li><a href="#" data-text="Infos professionnelles">2</a></li>
+				<li><a href="#" data-text="Formations stages">3</a></li>
+				<li><a href="#" data-text="Formateurs">4</a></li>
+				<li class="active"><a href="#" data-text="Validation" class="active">5</a></li>
+			</ul>
+		</div>
+	</div>
+	<div class="row formulaire" data-aos="zoom-in" data-aos-duration="3000">
+		<div class="col">
+			<div class="text-center"><img src="https://img.icons8.com/color/96/000000/ok--v2.png" class="fit-image"></div>
+
+			{% for label, messages in app.flashes(['success', 'danger']) %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+						<strong>Félicitaions {{ candidat.nom }} {{ candidat.prenoms }}, </strong> {{ message }}
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{% endfor %}
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

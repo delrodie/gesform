@@ -32,6 +32,12 @@ class InscriptionController extends AbstractController
     public function index(Request $request, $slug): Response
     {
 	    $scout = $this->getDoctrine()->getRepository(Membre::class, 'sygesca')->findOneBy(['slug'=>$slug]);
+		
+		// verifier si le scout a deja postuler a un camp; Si oui voir a quel niveau
+	    $existenceCandidat = $this->_candidature->existenceCandidat($scout->getMatricule());
+		if ($existenceCandidat){
+			return $this->redirectToRoute($existenceCandidat['route'],['slug'=>$existenceCandidat['slug']]);
+		}
 	
 	    if ($request->get('scout_slug') === $slug){
 			$candidat = $this->_candidature->formulaire($request, $scout);

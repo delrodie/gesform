@@ -22,7 +22,7 @@
     </div>
     <div class="row formulaire" data-aos="zoom-in" data-aos-duration="3000">
         <div class="col">
-            <h4>Formateur</h4>
+            <h4>Formations animées  </h4>
             <form action="{{ path('app_inscription_formation_formateur', {'slug': candidat.slug}) }}" method="post" enctype="multipart/form-data">
 
                 <div class="row form-group">
@@ -88,7 +88,7 @@
                             <i class="las la-angle-double-left"></i>
                             Précédent
                         </a>
-                        <a href="#" class="btn btn-primary">
+                        <a href="{{ path('app_valdiation', {'slug': candidat.slug}) }}" class="btn btn-primary">
                             <i class="las la-angle-double-right"></i>
                             Suivant
                         </a>

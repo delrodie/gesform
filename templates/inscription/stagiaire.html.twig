@@ -22,13 +22,13 @@
     </div>
     <div class="row formulaire" data-aos="zoom-in" data-aos-duration="3000">
         <div class="col">
-            <h4>Stagiaire</h4>
+            <h4>Formations en tant que stagiaire</h4>
             <form action="{{ path('app_inscription_formation_stagiaire', {'slug': candidat.slug}) }}" method="post" enctype="multipart/form-data">
 
                 <div class="row form-group">
                     <div class="col-md-6 mt-3">
                         <label for="scoute">Nom</label>
-                        <input type="text" class="form-control" name="scout_stagiaire_nom" autocomplete="off" required>
+                        <input type="text" class="form-control" name="scout_stagiaire_nom" autocomplete="off" required placeholder="Nom de la fromation">
                     </div>
                     <div class="col-md-6 mt-3">
                         <label for="scoute">Lieu</label>
