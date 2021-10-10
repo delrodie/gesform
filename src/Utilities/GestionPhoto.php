@@ -9,10 +9,12 @@
 	class GestionPhoto
 	{
 		private $photo;
+		private $formation;
 		
-		public function __construct($photoDirectory)
+		public function __construct($photoDirectory, $formationDirectory)
 		{
 			$this->photo = $photoDirectory;
+			$this->formation = $formationDirectory;
 		}
 		
 		/**
@@ -34,7 +36,8 @@
 			// Deplacement du fichier dans le repertoire dedié
 			try {
 				if ($media === 'photo') $file->move($this->photo, $newFilename);
-				//else $file->move($this->photo, $newFilename);
+				elseif ($media === 'media') $file->move($this->formation, $newFilename);
+				else $file->move($this->photo, $newFilename);
 			}catch (FileException $e){
 			
 			}
@@ -52,6 +55,7 @@
 		public function removeUpload($ancienMedia, $media = null): bool
 		{
 			if ($media === 'photo') unlink($this->photo.'/'.$ancienMedia);
+			elseif ($media === 'media') unlink($this->formation.'/'.$ancienMedia);
 			else return false;
 			
 			return true;

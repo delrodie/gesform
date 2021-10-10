@@ -27,3 +27,4 @@ services:
     App\Utilities\GestionPhoto:
         arguments:
             $photoDirectory: '%kernel.project_dir%/public/upload/photo'
+            $formationDirectory: '%kernel.project_dir%/public/upload/formation'

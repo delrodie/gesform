@@ -3,9 +3,11 @@
 	namespace App\Utilities;
 	
 	use App\Entity\Candidat;
+	use App\Entity\Formation;
 	use App\Entity\Sygesca\Membre;
 	use App\Entity\Sygesca\Region;
 	use Doctrine\ORM\EntityManagerInterface;
+	use Symfony\Component\Form\Form;
 	
 	class GestionCandidature
 	{
@@ -54,6 +56,11 @@
 			
 		}
 		
+		/**
+		 * @param $request
+		 * @param $candidat
+		 * @return mixed
+		 */
 		public function personnelle($request, $candidat)
 		{
 			$candidat->setNiveauEtude($this->validForm($request->get('scout_niveau_etude')));
@@ -66,6 +73,34 @@
 			$this->_em->flush();
 			
 			return $candidat;
+		}
+		
+		public function stagiaire($request, $candidat)
+		{
+			$mediaFile = $request->files->get('scout_stagiaire_media');
+			$media = null;
+			if ($mediaFile)
+				$media = $this->_photo->upload($mediaFile, 'media');
+			
+			$formation = new Formation();
+			$formation->setCandidat($candidat);
+			$formation->setMedia($media);
+			$formation->setType('STAGIAIRE');
+			$formation->setNom($this->validForm($request->get('scout_stagiaire_nom')));
+			$formation->setDate($this->validForm($request->get('scout_stagiaire_date')));
+			$formation->setLieu($this->validForm($request->get('scout_stagiaire_lieu')));
+			$formation->setTitularisation($this->validForm($request->get('scout_stagiaire_titularisation')));
+			
+			$this->_em->persist($formation);
+			$this->_em->flush();
+			
+			$formations = $this->_em->getRepository(Formation::class)->findBy(['candidat'=>$candidat->getId()]);
+			if (count($formations) > 1){
+				$candidat->setFlag(3);
+				$this->_em->flush();
+			}
+			
+			return $formation;
 		}
 		
 		
