@@ -46,7 +46,7 @@
             <ul>
                 <li><a href="{{ absolute_url(path('app_home')) }}" class="las la-home" data-text="Accueil"></a></li>
                 <li><a href="#" onclick="recherche()" class="las la-save" data-text="Inscription"></a></li>
-                <li><a href="#" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
+                <li><a href="#" onclick="paiement()" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
                 <li><a href="#" class="las la-file-alt" data-text="Fiche"></a></li>
             </ul>
         </div>
@@ -54,7 +54,7 @@
             <ul>
                 <li><a href="{{ absolute_url(path('app_home')) }}" class="las la-home" data-text="Accueil"></a></li>
                 <li><a href="#" onclick="recherche()" class="las la-save" data-text="Inscription"></a></li>
-                <li><a href="#" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
+                <li><a href="#" onclick="paiement()" class="las la-hand-holding-usd" data-text="Paiement"></a></li>
                 <li><a href="#" class="las la-file-alt" data-text="Fiche"></a></li>
             </ul>
         </div>
@@ -113,6 +113,103 @@
                             }
                         }
                     })
+                }
+
+                function paiement() {
+                    Swal.fire({
+                        title: 'Entre ton matricule',
+                        input: 'text',
+                        inputAttributes: {
+                            autocapitalize: 'off'
+                        },
+                        showCancelButton: true,
+                        confirmButtonText: '<i class="fas fa-search"></i> Valider',
+                        inputPlaceholder: 'Entre ton matricule',
+                        showLoaderOnConfirm: true,
+                        cancelButtonText: 'Annuler',
+                        footer: '<a href="#">J\'ai oublié mon matricule</a>',
+                        preConfirm: (matricule) => {
+                            return fetch(`{{ absolute_url(path('app_home')) }}ajax/${matricule}/paiement`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error(response.statusText)
+                                        }
+                                        let matricule = response.matricule;
+                                        console.log(matricule)
+                                        return response.json()
+
+                                    })
+                                    .catch(error => {
+                                        Swal.showValidationMessage(
+                                                `Demande échouée: ${error}`
+                                        )
+                                    })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            let donnee = result.value
+                            if (!donnee){
+                                Swal.fire({
+                                    title: 'Echec!',
+                                    text: 'Le matricule entré n\'existe pas. Prière reprendre',
+                                    icon: 'error',
+                                    footer: '<a href="{{ absolute_url(path('app_home')) }}">J\'ai oublié mon matricule</a>'
+                                })
+                            }else{
+                                console.log(donnee)
+                                var candidate = donnee.id
+                                //dump();
+                                //window.location = "http://adhesion.scoutascci.org/";
+                                //window.location = "{{ absolute_url(path('app_home')) }}inscription/"+ donnee.slug;
+                                $.ajax({
+                                    type: "POST",
+                                    url: "https://api-checkout.cinetpay.com/v2/payment",
+                                    dataType: 'json',
+                                    data: {
+                                        "amount" : donnee.montant,
+                                        "currency": "XOF",
+                                        "apikey": '18714242495c8ba3f4cf6068.77597603',
+                                        'site_id': 356950,
+                                        "transaction_id": donnee.id_transaction,
+                                        "description": donnee.description,
+                                        "return_url": '{{ absolute_url(path('app_home')) }}',
+                                        "notify_url": '{{ absolute_url(path('cinetpay_notify')) }}',
+                                        "customer_id": donnee.matricule,
+                                        "customer_name": donnee.nom,
+                                        "customer_surname": donnee.prenoms,
+                                        "customer_city": donnee.region
+                                    }
+                                }).done(function (result) {
+                                    console.log(result)
+                                    if (result.code == '201'){
+                                        $.ajax({
+                                            url: "{{ absolute_url(path('cinetpay_paiement')) }}",
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            data:{
+                                                'api_response_id': result.api_response_id,
+                                                'token': result.data.payment_token,
+                                                'url': result.data.payment_url,
+                                                'candidater': candidate
+                                            }
+                                        }).done(function (res) {
+                                            window.location = res.url
+                                        })
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
+
+                let form = document.querySelector('form');
+                form.onsubmit = function (){traitement()}
+                function traitement() {
+                    let button = document.querySelector('.btn)
+                    button.append(' Traitement...')
+                    //button.innerHTML(' Traitement...')
+                    button.disabled = true;
                 }
             </script>
         {% endblock %}

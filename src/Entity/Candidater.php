@@ -252,9 +252,17 @@ class Candidater
 	 * @ORM\PrePersist
 	 */
 	public function setCreatedAtValue(): \DateTime
-                                    	{
-                                    		return $this->createdAt = new \DateTime();
-                                    	}
+    {
+       return $this->createdAt = new \DateTime();
+    }
+	
+	/**
+	 * @ORM\PreUpdate
+	 */
+	public function setUpdatedAtValue(): \DateTime
+	{
+		return $this->updatedAt = new \DateTime();
+	}
 
     public function getCandidat(): ?Candidat
     {

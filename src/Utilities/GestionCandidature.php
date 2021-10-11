@@ -106,6 +106,23 @@
 		}
 		
 		/**
+		 * Paiement cinetpay
+		 *
+		 * @param $data
+		 * @return Candidater|mixed|object|null
+		 */
+		public function cinetpay($data)
+		{
+			$candidate = $this->_em->getRepository(Candidater::class)->findOneBy(['id'=>$data['candidate']]);
+			$candidate->setResponseId($data['response_id']);
+			$candidate->setToken($data['token']);
+			$candidate->setUrl($data['url']);
+			$this->_em->flush();
+			
+			return $candidate;
+		}
+		
+		/**
 		 * Enregistrement de la table candidater
 		 *
 		 * @param $request
@@ -134,7 +151,7 @@
 			$candidater->setIdTransaction($id_transaction);
 			$candidater->setStatusPaiement($status_paiement);
 			$candidater->setMontant($montant);
-			$candidater->setCode($code);
+			//$candidater->setCode($code);
 			
 			$this->_em->persist($candidater);
 			$this->_em->flush();

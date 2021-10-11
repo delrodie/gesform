@@ -66,6 +66,23 @@ class CandidaterRepository extends ServiceEntityRepository
 			->getQuery()->getOneOrNullResult()
 			;
 	}
+	
+	public function findOneByMatricule($matricule)
+	{
+		return $this
+			->createQueryBuilder('c')
+			->addSelect('a')
+			->addSelect('ca')
+			->addSelect('r')
+			->leftJoin('c.activite', 'a')
+			->leftJoin('c.candidat', 'ca')
+			->leftJoin('ca.region', 'r')
+			->where('ca.matricule = :matricule')
+			->setParameter('matricule', $matricule)
+			->setMaxResults(1)
+			->getQuery()->getOneOrNullResult()
+			;
+	}
 
     // /**
     //  * @return Candidater[] Returns an array of Candidater objects
