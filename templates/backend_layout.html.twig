@@ -63,12 +63,15 @@
                     <a href="{{ absolute_url(path('conafor_district_index')) }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                         <i class="fas fa-map-marked-alt"></i> Districts
                     </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
-                        <i class="fas fa-user-lock"></i> Utilisateurs
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
-                        <i class="fas fa-user-cog"></i>  Compte
-                    </a>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <a href="{{ path('admin_user_index') }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                            <i class="fas fa-user-lock"></i> Utilisateurs
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold">
+                            <i class="fas fa-user-cog"></i>  Compte
+                        </a>
+                    {% endif %}
+
                 </div>
             </div>
 

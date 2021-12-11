@@ -1,0 +1,97 @@
+{% extends 'backend_layout.html.twig' %}
+
+{% block title %}{{ parent() }} Gestion des districts{% endblock %}
+{% block entete %}Gestion des districts{% endblock %}
+
+{% block body %}
+    <div class="container-fluid px-4">
+
+        <div class="row my-5 sygesca">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col mt-5 tableau-liste">
+                                <table id="liste" class="compact display table-responsive" style="width: 100%;">
+                                    <thead>
+                                    <tr style="text-align:center;">
+                                        <th>ID</th>
+                                        <th>LOGIN</th>
+                                        <th>EMAIL</th>
+                                        <th>ROLE</th>
+                                        <th>CONNEXION</th>
+                                        <th>DATE</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            <td>
+                                                <a href="{{ path('admin_user_edit', {'id': user.id}) }}">{{ user.userIdentifier }}</a>
+
+                                            </td>
+                                            <td>{{ user.email }}</td>
+                                            <td style="text-align:center;">
+                                                {% if user.roles[1] %}
+                                                   Administrateur
+                                                {% else %}
+                                                    Utilisateur
+                                                {% endif %}
+                                            </td>
+                                            <td style="text-align:center;">{{ user.loginCount ? user.loginCount : '-' }}</td>
+                                            <td style="text-align:center;">{{ user.lastConnectedAt? user.lastConnectedAt|date('Y-m-d H:i:s') : '-' }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Enregistrement</h5>
+                        {{ include('admin_user/_form.html.twig') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.0.0/css/buttons.dataTables.min.css">
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.0/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('#liste').DataTable( {
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ],
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.11.3/i18n/fr_fr.json'
+                },
+                responsive: true
+            } );
+        } );
+    </script>
+{% endblock %}
