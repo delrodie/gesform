@@ -163,3 +163,8 @@
   color: var(--routier);
   font-size: 1rem;
 }
+
+.payer i{
+  color: var(--bleu);
+  font-size: 1rem;
+}

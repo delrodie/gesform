@@ -50,6 +50,11 @@ class CandidaterRepository extends ServiceEntityRepository
 		return $query->getQuery()->getResult();
 	}
 	
+	/**
+	 * @param $candidater
+	 * @return int|mixed|string|null
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 */
 	public function findOneById($candidater)
 	{
 		return $this
@@ -67,6 +72,11 @@ class CandidaterRepository extends ServiceEntityRepository
 			;
 	}
 	
+	/**
+	 * @param $matricule
+	 * @return int|mixed|string|null
+	 * @throws \Doctrine\ORM\NonUniqueResultException
+	 */
 	public function findOneByMatricule($matricule)
 	{
 		return $this
@@ -86,6 +96,30 @@ class CandidaterRepository extends ServiceEntityRepository
 			->setMaxResults(1)
 			->getQuery()->getOneOrNullResult()
 			;
+	}
+	
+	public function findParticipantByActiviteOrNo($activite=null)
+	{
+		$query = $this->createQueryBuilder('c')
+			->addSelect('ca')
+			->addSelect('a')
+			->addSelect('r')
+			->leftJoin('c.candidat', 'ca')
+			->leftJoin('c.activite', 'a')
+			->leftJoin('ca.region', 'r')
+		;
+		if ($activite){
+			$query->where('a.id = :activite')
+				->andWhere('c.statusPaiement = :status')
+				->setParameters([
+					'activite'=> $activite,
+					'status' => 'VALIDE'
+				]);
+		}else{
+			$query->where('c.statusPaiement = :status')
+				->setParameter('status', 'VALIDE');
+		}
+		return $query->getQuery()->getResult();
 	}
 
     // /**

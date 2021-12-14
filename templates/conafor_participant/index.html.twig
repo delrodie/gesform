@@ -1,7 +1,7 @@
 {% extends 'backend_layout.html.twig' %}
 
-{% block title %}{{ parent() }} Liste des candidats{% endblock %}
-{% block entete %}Liste des candidats{% endblock %}
+{% block title %}{{ parent() }} Liste des particpants{% endblock %}
+{% block entete %}Liste des participants{% endblock %}
 
 {% block body %}
     <div class="container-fluid px-4">
@@ -20,7 +20,7 @@
                         {% endfor %}
                         <div class="row mt-2 mb-5">
                             <div class="col-md-10 offset-md-1 text-center">
-                                <form action="{{ path('conafor_candidat_index') }}" method="post">
+                                <form action="{{ path('conafor_participant_index') }}" method="post">
                                     <div class="row">
                                         <div class="col-3">Filtrez la liste</div>
                                         <div class="col-4">
@@ -30,14 +30,6 @@
                                                 {% for activite in activites %}
                                                     <option value="{{ activite.id }}">{{ activite.nom }}</option>
                                                 {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="col-3">
-                                            <select name="search_validation" id="" class="form-control">
-                                                <option value="">-- Selectionnez le statut --</option>
-                                                <option value=""></option>
-                                                <option value="true">VALIDE</option>
-                                                <option value="">NON VALIDE</option>
                                             </select>
                                         </div>
                                         <div class="col-2">
@@ -56,36 +48,23 @@
                                         <th>REGION</th>
                                         <th>MATRICULE</th>
                                         <th>NOM & PRENOMS</th>
-                                        <th>DATE & LIEU NAISSANCE</th>
                                         <th>SEXE</th>
                                         <th>FONCTION</th>
-                                        <th>DATE D'ENTREE</th>
+                                        <th>N° DOSSIER</th>
                                         <th>CONTACT</th>
-                                        <th>ACTION</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for candidater in candidaters %}
+                                    {% for candidater in participants %}
                                         <tr>
                                             <td>{{ loop.index }}</td>
                                             <td>{{ candidater.candidat.region.nom|title }}</td>
                                             <td class="text-center">{{ candidater.candidat.matricule }}</td>
                                             <td>{{ candidater.candidat.nom }} {{ candidater.candidat.prenoms|title }}</td>
-                                            <td>{{ candidater.candidat.dateNaissance }} à {{ candidater.candidat.lieuNaissance }}</td>
                                             <td>{{ candidater.candidat.sexe|title }}</td>
                                             <td>{{ candidater.candidat.fonction|title }}</td>
-                                            <td class="text-center">{{ candidater.candidat.dateEntree }}</td>
+                                            <td class="text-center">{{ candidater.code }}</td>
                                             <td>{{ candidater.candidat.contact }}</td>
-                                            <td class="text-center">
-                                                {% if not candidater.validation %}
-                                                    <a href="{{ path('conafor_candidat_show', {'id': candidater.id}) }}" class="non-valide"><i class="far fa-edit"></i></a>
-                                                {% else %}
-                                                    <a href="{{ path('conafor_candidat_show', {'id': candidater.id}) }}" class="valide"><i class="far fa-check-square"></i></a>
-                                                {% endif %}
-                                                {% if candidater.statusPaiement == 'VALIDE' %}
-                                                    &nbsp; &nbsp; <a href="" class="payer" title="Participation acquitée"><i class="fas fa-coins"></i></a>
-                                                {% endif %}
-                                            </td>
                                         </tr>
                                     {% endfor %}
                                     </tbody>
