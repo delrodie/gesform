@@ -5,6 +5,7 @@
 	use App\Entity\Activite;
 	use App\Entity\Candidater;
 	use App\Utilities\GestionCandidature;
+	use App\Utilities\GestionMail;
 	use Doctrine\ORM\EntityManagerInterface;
 	use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 	use Symfony\Component\HttpFoundation\Request;
@@ -21,11 +22,13 @@
 	{
 		private $_candidature;
 		private $_em;
+		private $_mail;
 		
-		public function __construct(GestionCandidature $_candidature, EntityManagerInterface $_em)
+		public function __construct(GestionCandidature $_candidature, EntityManagerInterface $_em, GestionMail $_mail)
 		{
 			$this->_candidature = $_candidature;
 			$this->_em = $_em;
+			$this->_mail = $_mail;
 		}
 		
 		/**
@@ -108,6 +111,8 @@
 								
 								// Generation du code de dossier puis mise a jour de la table candidater
 								$this->mise_a_jour($candidater);
+								
+								$this->_mail->paiement($candidater);
 							}
 						}
 					}

@@ -15,11 +15,13 @@
 	{
 		private $_em;
 		private $_photo;
+		private $_mail;
 		
-		public function __construct(EntityManagerInterface $_em, GestionPhoto $_photo)
+		public function __construct(EntityManagerInterface $_em, GestionPhoto $_photo, GestionMail $_mail)
 		{
 			$this->_em = $_em;
 			$this->_photo = $_photo;
+			$this->_mail = $_mail;
 		}
 		
 		/**
@@ -158,6 +160,8 @@
 			
 			$candidat->setFlag(5);
 			$this->_em->flush();
+			
+			$this->_mail->demande($candidater);
 			
 			return true;
 		}
