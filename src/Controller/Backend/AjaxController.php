@@ -52,17 +52,20 @@
 			
 			$candidater = $this->getDoctrine()->getRepository(Candidater::class)->findOneByMatricule($matricule);
 			
-			$data = [
-				'nom' => $candidater->getCandidat()->getNom(),
-				'prenoms' => $candidater->getCandidat()->getPrenoms(),
-				'id_transaction' => $candidater->getIdTransaction(),
-				'montant' => $candidater->getMontant(),
-				'matricule' => $candidater->getCandidat()->getMatricule(),
-				'region' => $candidater->getCandidat()->getRegion()->getNom(),
-				'code' => $candidater->getCode(),
-				'description' => "test",
-				'id' => $candidater->getId()
-			];
+			$data=[];
+			if ($candidater){
+				$data = [
+					'nom' => $candidater->getCandidat()->getNom(),
+					'prenoms' => $candidater->getCandidat()->getPrenoms(),
+					'id_transaction' => $candidater->getIdTransaction(),
+					'montant' => $candidater->getMontant(),
+					'matricule' => $candidater->getCandidat()->getMatricule(),
+					'region' => $candidater->getCandidat()->getRegion()->getNom(),
+					'code' => $candidater->getCode(),
+					'description' => "test",
+					'id' => $candidater->getId()
+				];
+			}
 			
 			return $this->json($data);
 		}

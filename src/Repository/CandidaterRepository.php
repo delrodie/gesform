@@ -78,7 +78,11 @@ class CandidaterRepository extends ServiceEntityRepository
 			->leftJoin('c.candidat', 'ca')
 			->leftJoin('ca.region', 'r')
 			->where('ca.matricule = :matricule')
-			->setParameter('matricule', $matricule)
+			->andWhere('c.validation = :validation')
+			->setParameters([
+				'matricule' => $matricule,
+				'validation' => 1
+			])
 			->setMaxResults(1)
 			->getQuery()->getOneOrNullResult()
 			;

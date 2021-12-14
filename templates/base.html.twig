@@ -149,12 +149,14 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             let donnee = result.value
-                            if (!donnee){
+                            console.log(result.value)
+                            console.log(result.value.length)
+                            if (!donnee.id){
                                 Swal.fire({
                                     title: 'Echec!',
-                                    text: 'Le matricule entré n\'existe pas. Prière reprendre',
+                                    text: 'Votre candidature est encours de validation. Prière patienter',
                                     icon: 'error',
-                                    footer: '<a href="{{ absolute_url(path('app_home')) }}">J\'ai oublié mon matricule</a>'
+                                    footer: '<a href="{{ absolute_url(path('app_home')) }}">Retour</a>'
                                 })
                             }else{
                                 console.log(donnee)
