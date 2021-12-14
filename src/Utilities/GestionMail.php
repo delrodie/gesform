@@ -20,7 +20,7 @@
 			$email = (new TemplatedEmail())
 				->from(new Address('conafor@scoutascci.org', 'ASCCI-CONAFOR'))
 				//->to(new Address($candidat->getCandidat()->getEmail(),$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms()))
-				->to(new Address('delrodieamoikon@gmail.com',$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms()))
+				->addCc(new Address('delrodieamoikon@gmail.com',$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms()))
 				->subject('VALIDATION CANDIDATURE FORMATION')
 				->htmlTemplate('email/validation.html.twig')
 				->context([
