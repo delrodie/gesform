@@ -6,6 +6,7 @@ use App\Entity\Activite;
 use App\Entity\Candidater;
 use App\Entity\Formation;
 use App\Repository\CandidaterRepository;
+use App\Utilities\GestionMail;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,6 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ConaforCandidatController extends AbstractController
 {
+	private $_mail;
+	
+	public function __construct(GestionMail $_mail)
+	{
+		$this->_mail = $_mail;
+	}
+	
     /**
      * @Route("/", name="conafor_candidat_index", methods={"GET","POST"})
      */
@@ -61,6 +69,7 @@ class ConaforCandidatController extends AbstractController
 		if ($mention === 'VALIDER'){
 			$candidater->setValidation(true);
 			$candidater->setMention($mention);
+			$this->_mail->candidature($candidater);
 			$this->addFlash('success', "La candidature de ".$candidater->getCandidat()->getNom()." a été validée avec succès.");
 		}else{
 			$candidater->setMention($mention);
