@@ -54,16 +54,19 @@
                     <a href="{{ path('conafor_participant_index') }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                         <i class="fas fa-users"></i> Participants
                     </a>
+                    <a href="{{ path('conafor_finance_index') }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
+                        <i class="fas fa-wallet"></i> Finances
+                    </a>
                     <a href="{{ path('conafor_activite_index') }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i
                                 class="fas fa-paperclip me-2"></i>Activités
                     </a>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <a href="{{ absolute_url(path('conafor_region_index')) }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                         <i class="fas fa-map-marked-alt"></i> Régions
                     </a>
                     <a href="{{ absolute_url(path('conafor_district_index')) }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                         <i class="fas fa-map-marked-alt"></i> Districts
                     </a>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <a href="{{ path('admin_user_index') }}" class="list-group-item list-group-item-action bg-transparent second-text fw-bold">
                             <i class="fas fa-user-lock"></i> Utilisateurs
                         </a>

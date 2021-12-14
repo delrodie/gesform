@@ -220,6 +220,43 @@
 				return false;
 		}
 		
+		public function fincance($activite=null)
+		{
+			$candidats = $this->_em->getRepository(Candidater::class)->findParticipantByActiviteOrNo($activite);
+			$data=[];$i=0; $montant_total=0;
+			foreach ($candidats as $candidat){
+				$age = date('Y') - date('Y', strtotime($candidat->getCandidat()->getDateNaissance()));
+				$data[$i++] = [
+					'code' => $candidat->getCode(),
+					'matricule' => $candidat->getCandidat()->getMatricule(),
+					'nom' => $candidat->getCandidat()->getNom(),
+					'prenoms' => $candidat->getCandidat()->getPrenoms(),
+					'date_naissance' => $candidat->getCandidat()->getDateNaissance(),
+					'lieu_naissance' => $candidat->getCandidat()->getLieuNaissance(),
+					'carte_scoute' => $candidat->getCandidat()->getCarteScoute(),
+					'date_entree' => $candidat->getCandidat()->getDateEntree(),
+					'niveau_etude' => $candidat->getCandidat()->getNiveauEtude(),
+					'profession' => $candidat->getCandidat()->getProfession(),
+					'residence' => $candidat->getCandidat()->getResidence(),
+					'email' => $candidat->getCandidat()->getEmail(),
+					'sexe' => $candidat->getCandidat()->getSexe(),
+					'photo' => $candidat->getCandidat()->getPhoto(),
+					'region' => $candidat->getCandidat()->getRegion()->getNom(),
+					'montant' => $candidat->getActivite()->getMontant(),
+					'contact' => $candidat->getCandidat()->getContact(),
+					'fonction' => $candidat->getCandidat()->getFonction(),
+					'age' => $age
+				];
+				$montant_total = $montant_total + (int) $candidat->getActivite()->getMontant();
+			}
+			$result = [
+				'participant' => $data,
+				'total' => $montant_total
+			];
+			
+			return $result;
+		}
+		
 		/**
 		 * Montant a payer
 		 *

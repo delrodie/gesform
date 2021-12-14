@@ -168,3 +168,12 @@
   color: var(--bleu);
   font-size: 1rem;
 }
+.finance .libelle{
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+.finance .montant{
+  font-weight: bold;
+  font-size: 1.9rem;
+  color: var(--routier);
+}
