@@ -72,8 +72,7 @@ class ConaforCandidatController extends AbstractController
 			$this->_mail->candidature($candidater);
 			$this->addFlash('success', "La candidature de ".$candidater->getCandidat()->getNom()." a été validée avec succès.");
 		}else{
-			$candidater->setMention($mention);
-			$candidater->setValidation(false);
+			$entityManager->remove($candidater);
 			if ($mention==='REJETER'){
 				$this->_mail->rejet($candidater);
 				$this->addFlash('danger', "La candidature de ".$candidater->getCandidat()->getNom()." a été rejetée avec succès.");
