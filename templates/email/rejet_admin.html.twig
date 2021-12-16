@@ -1,0 +1,26 @@
+{% extends 'email_layout.html.twig' %}
+{% block title %}Rejet de candidature{% endblock %}
+{% block body %}
+	<tr>
+		<td valign="middle" class="hero bg_white" style="padding: 2em 0 4em 0;">
+			<table>
+				<tr>
+					<td>
+						<div class="text" style="padding: 0 2.5em; text-align: center;">
+							<h2>Rejet</h2>
+							<h3>Un membre du CONAFOR vient de rejeter la candidature de {{ candidat.candidat.nom|upper }} {{ candidat.candidat.prenoms|title }} de la région de {{ candidat.candidat.region.nom }}. </h3>
+							<p><a href="{{ absolute_url(path('conafor_dashboard')) }}" class="btn btn-primary">Acceder au backend</a></p>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+{% endblock %}
+{% block footer %}
+	<tr>
+		<td class="bg_light" style="text-align: center;">
+			<p>Vous recevez cet email car vous êtes un administrateur de la plateforme de gestion des formations de l'ASCCI.</p>
+		</td>
+	</tr>
+{% endblock %}

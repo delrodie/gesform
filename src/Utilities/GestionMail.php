@@ -88,7 +88,7 @@
 		{
 			$email = (new TemplatedEmail())
 				->from(new Address('conafor@scoutascci.org', 'ASCCI-CONAFOR'))
-				->to(new Address($candidat->getCandidat()->getEmail(),$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms()))
+				->to(...$this->administrateur())
 				->addCc(new Address('delrodieamoikon@gmail.com'), new Address('conafor.ascci@gmail.com'))
 				->subject('REJET DE  LA CANDIDATURE DE '.$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms())
 				->htmlTemplate('email/rejet.html.twig')
@@ -97,6 +97,19 @@
 				])
 			;
 			$this->mailer->send($email);
+			
+			$email_admin = (new TemplatedEmail())
+				->from(new Address('conafor@scoutascci.org', 'ASCCI-CONAFOR'))
+				->to(new Address($candidat->getCandidat()->getEmail(),$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms()))
+				->addCc(new Address('delrodieamoikon@gmail.com'), new Address('conafor.ascci@gmail.com'))
+				->subject('REJET DE  LA CANDIDATURE DE '.$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms())
+				->htmlTemplate('email/rejet_admin.html.twig')
+				->context([
+					'candidat' => $candidat
+				])
+			;
+			$this->mailer->send($email_admin);
+			
 			return true;
 		}
 		
