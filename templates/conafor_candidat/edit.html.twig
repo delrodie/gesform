@@ -14,12 +14,14 @@
 						<h5 class="card-title">{{ candidater.candidat.nom }} {{ candidater.candidat.prenoms }}</h5>
 						<h6 class="card-subtitle mb-2 text-muted">{{ candidater.candidat.fonction }}</h6>
 						<p class="card-text">{{ candidater.candidat.sexe|title}} née(e) le {{ candidater.candidat.dateNaissance}} à {{ candidater.candidat.lieuNaissance|title }}</p>
-						<a href="{{ path('confor_candidat_edit', {'id': candidater.id, 'mention': 'REJETER'}) }}" class="btn btn-danger btn-sm card-link">
-							<i class="far fa-times-circle"></i>  Rejeter
-						</a>
-						<a href="{{ path('confor_candidat_edit', {'id': candidater.id, 'mention': 'DOSSIER INCOMPLET'}) }}" class="btn btn-warning btn-sm card-link">
-							<i class="far fa-file"></i> Dossier incomplet
-						</a>
+						{% if candidater.statusPaiement != 'VALIDE' %}
+							<a href="{{ path('confor_candidat_edit', {'id': candidater.id, 'mention': 'REJETER'}) }}" class="btn btn-danger btn-sm card-link">
+								<i class="far fa-times-circle"></i>  Rejeter
+							</a>
+							<a href="{{ path('confor_candidat_edit', {'id': candidater.id, 'mention': 'DOSSIER INCOMPLET'}) }}" class="btn btn-warning btn-sm card-link">
+								<i class="far fa-file"></i> Dossier incomplet
+							</a>
+						{% endif %}
 						<a href="{{ path('confor_candidat_edit', {'id': candidater.id, 'mention': 'VALIDER'}) }}" class="btn btn-success btn-sm card-link">
 							<i class="far fa-check-circle"></i> Valider
 						</a>
