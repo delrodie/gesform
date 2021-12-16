@@ -210,7 +210,8 @@
 					return $message;
 				}elseif(!$candidater->getValidation()){
 					if ($candidater->getMention() === 'REJETER'){
-						$message = "Votre dossier a été rejété. Merci d'attendre à la prochaine session";
+						//$message = "Votre dossier a été rejété. Merci d'attendre à la prochaine session";
+						return false;
 					}elseif($candidater->getMention() === 'DOSSIER INCOMPLET'){
 						$message = "Votre dossier est incomplet. Merci de l'actualiser";
 					}else{

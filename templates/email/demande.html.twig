@@ -9,7 +9,7 @@
 						<div class="text" style="padding: 0 2.5em; text-align: center;">
 							<h2>Candidature</h2>
 							<h3>{{ candidater.candidat.nom }} {{ candidater.candidat.prenoms }} vient de faire une demande de candidature au stage de formation. </h3>
-							<p><a href="{{ path('conafor_candidat_show', {'id': candidater.id}) }}" class="btn btn-primary">Valider</a></p>
+							<p><a href="{{ absolute_url(path('conafor_candidat_show', {'id': candidater.id}) )}}" class="btn btn-primary">Valider</a></p>
 						</div>
 					</td>
 				</tr>

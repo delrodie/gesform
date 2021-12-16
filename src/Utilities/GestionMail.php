@@ -54,7 +54,7 @@
 				->subject('CANDIDATURE DE '.$candidater->getCandidat()->getNom().' '.$candidater->getCandidat()->getPrenoms())
 				->htmlTemplate('email/demande.html.twig')
 				->context([
-					'candidat' => $candidater
+					'candidater' => $candidater
 				])
 			;
 			$this->mailer->send($email);
@@ -80,6 +80,27 @@
 		}
 		
 		/**
+		 * @param $candidat
+		 * @return bool
+		 * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+		 */
+		public function rejet($candidat): bool
+		{
+			$email = (new TemplatedEmail())
+				->from(new Address('conafor@scoutascci.org', 'ASCCI-CONAFOR'))
+				->to(new Address($candidat->getCandidat()->getEmail(),$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms()))
+				->addCc(new Address('delrodieamoikon@gmail.com'), new Address('conafor.ascci@gmail.com'))
+				->subject('REJET DE  LA CANDIDATURE DE '.$candidat->getCandidat()->getNom().' '.$candidat->getCandidat()->getPrenoms())
+				->htmlTemplate('email/rejet.html.twig')
+				->context([
+					'candidat' => $candidat
+				])
+			;
+			$this->mailer->send($email);
+			return true;
+		}
+		
+		/**
 		 * @return array
 		 */
 		protected function administrateur(): array
@@ -88,11 +109,10 @@
 			$admin=[];$i=0;
 			foreach ($users as $user){
 				if ($user->getRoles()[1]=== 'ROLE_ADMIN'){
-					$admin[$i++]=[
-						'email' => $user->getEmail(),
-					];
+					$admin[$i++]= $user->getEmail();
 				}
 			}
+			//dd($admin);
 			
 			return $admin;
 		}

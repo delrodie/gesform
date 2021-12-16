@@ -74,9 +74,10 @@ class ConaforCandidatController extends AbstractController
 		}else{
 			$candidater->setMention($mention);
 			$candidater->setValidation(false);
-			if ($mention==='REJETER')
+			if ($mention==='REJETER'){
+				$this->_mail->rejet($candidater);
 				$this->addFlash('danger', "La candidature de ".$candidater->getCandidat()->getNom()." a été rejetée avec succès.");
-			else
+			}else
 				$this->addFlash('danger', "La candidature de ".$candidater->getCandidat()->getNom()." a été invalidée pour dossier incomplet");
 		}
 		
