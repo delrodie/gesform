@@ -129,7 +129,7 @@
 		 * @return Candidater|mixed|object|null
 		 */
 		public function cinetpay_acompte($data)
-		{ dd($data);
+		{ dd($data['candidate']);
 			$candidate = $this->_em->getRepository(Candidater::class)->findOneBy(['id'=>$data['candidate']]);
 			$candidate->setResponseIdAcompte($data['response_id']);
 			$candidate->setTokenAcompte($data['token']);
