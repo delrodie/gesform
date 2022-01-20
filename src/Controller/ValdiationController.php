@@ -111,7 +111,7 @@ class ValdiationController extends AbstractController
                 'token' => $donnee->data->payment_token,
                 'url' => $donnee->data->payment_url,
                 'candidate' => $candidater->getId()
-			]; dd($data);
+			]; //dd($data);
 			
 			$this->_candidature->cinetpay_acompte($data);
 		}
