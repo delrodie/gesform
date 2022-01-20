@@ -98,6 +98,26 @@ class Candidater
      */
     private $code;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $acompte;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token_acompte;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $url_acompte;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $responseId_acompte;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -252,17 +272,17 @@ class Candidater
 	 * @ORM\PrePersist
 	 */
 	public function setCreatedAtValue(): \DateTime
-    {
-       return $this->createdAt = new \DateTime();
-    }
+                                        {
+                                           return $this->createdAt = new \DateTime();
+                                        }
 	
 	/**
 	 * @ORM\PreUpdate
 	 */
 	public function setUpdatedAtValue(): \DateTime
-	{
-		return $this->updatedAt = new \DateTime();
-	}
+                                    	{
+                                    		return $this->updatedAt = new \DateTime();
+                                    	}
 
     public function getCandidat(): ?Candidat
     {
@@ -308,6 +328,54 @@ class Candidater
     public function setCode(?string $code): self
     {
         $this->code = $code;
+
+        return $this;
+    }
+
+    public function getAcompte(): ?int
+    {
+        return $this->acompte;
+    }
+
+    public function setAcompte(?int $acompte): self
+    {
+        $this->acompte = $acompte;
+
+        return $this;
+    }
+
+    public function getTokenAcompte(): ?string
+    {
+        return $this->token_acompte;
+    }
+
+    public function setTokenAcompte(?string $token_acompte): self
+    {
+        $this->token_acompte = $token_acompte;
+
+        return $this;
+    }
+
+    public function getUrlAcompte(): ?string
+    {
+        return $this->url_acompte;
+    }
+
+    public function setUrlAcompte(?string $url_acompte): self
+    {
+        $this->url_acompte = $url_acompte;
+
+        return $this;
+    }
+
+    public function getResponseIdAcompte(): ?string
+    {
+        return $this->responseId_acompte;
+    }
+
+    public function setResponseIdAcompte(string $responseId_acompte): self
+    {
+        $this->responseId_acompte = $responseId_acompte;
 
         return $this;
     }

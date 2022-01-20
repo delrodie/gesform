@@ -23,6 +23,23 @@
 		}
 		
 		/**
+		 * @return array
+		 */
+		public function findActivte()
+		{
+			$activite = [
+				'id' => $this->findActiviteEncours()->getId(),
+				'nom' => $this->findActiviteEncours()->getNom(),
+				'code' => $this->findActiviteEncours()->getCode(),
+				'montant' => $this->findActiviteEncours()->getMontant(),
+				'slug' => $this->findActiviteEncours()->getSlug(),
+				'description' => $this->findActiviteEncours()->getDescription(),
+				'acompte' => (int) $this->findActiviteEncours()->getMontant() / 2
+			];
+			return $activite;
+		}
+		
+		/**
 		 * @return string
 		 */
 		public function annee(): string

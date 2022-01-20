@@ -123,9 +123,13 @@
                         <label for="scout_activite">Activte <span style="color: red; font-weight:bold; font-size: 1.3rem;">*</span></label>
                         <input type="text" class="form-control" value="{{ activite.nom }}" readonly>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-3">
                         <label for="scout_activite">Montant <span style="color: red; font-weight:bold; font-size: 1.3rem;">*</span></label>
                         <input type="text" class="form-control" value="{{ activite.montant }}" readonly>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="scout_activite">Accompte à verser <span style="color: red; font-weight:bold; font-size: 1.3rem;">*</span></label>
+                        <input type="text" class="form-control" value="{{ activite.acompte }}" readonly style="color: darkred">
                     </div>
                 </div>
                 <div class="row text-center bouton-submit" data-aos="fade-up"data-aos-duration="1500">

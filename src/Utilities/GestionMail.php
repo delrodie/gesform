@@ -79,6 +79,23 @@
 			return true;
 		}
 		
+		public function acompte($candidater)
+		{
+			$email = (new TemplatedEmail())
+				->from(new Address('conafor@scoutascci.org', 'ASCCI-CONAFOR'))
+				->to(...$this->administrateur())
+				->addCc(new Address('delrodieamoikon@gmail.com'), new Address('conafor.ascci@gmail.com'))
+				->subject('CANDIDATURE DE '.$candidater->getCandidat()->getNom().' '.$candidater->getCandidat()->getPrenoms())
+				->htmlTemplate('email/acompte.html.twig')
+				->context([
+					'candidat' => $candidater
+				])
+			;
+			$this->mailer->send($email);
+			
+			return true;
+		}
+		
 		/**
 		 * @param $candidat
 		 * @return bool

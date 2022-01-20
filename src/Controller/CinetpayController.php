@@ -128,6 +128,78 @@
 		}
 		
 		/**
+		 * @Route("/notify/acompte", name="cinetpay_notify_acompte", methods={"GET","POST"})
+		 */
+		public function notify_acompte(Request $request)
+		{
+			//Initialisation
+			$encoders = [new XmlEncoder(), new JsonEncoder()];
+			$normalizers = [new ObjectNormalizer()];
+			$serializer = new Serializer($normalizers, $encoders);
+			
+			$cpmTransId = $request->get('cpm_trans_id');
+			
+			if (isset($cpmTransId)){
+				try {
+					$url = 'https://api-checkout.cinetpay.com/v2/payment/check';
+					$apiKey = '18714242495c8ba3f4cf6068.77597603';
+					$site_id = 356950;
+					$plateform = "PROD"; // Valorisé à PROD si vous êtes en production
+					
+					// Verification du statut de la candidature
+					//$adherant = $this->em->getRepository(Adherant::class)->findOneBy(['idtransaction'=>$cpmTransId]); //dd($adherant);
+					$candidater = $this->_em->getRepository(Candidater::class)->findOneBy(['idTransaction'=>$cpmTransId]);
+					if ($candidater){
+						if ($candidater->getStatusPaiement() === 'ACOMPTE'){
+							$data = [
+								'status' => false,
+								'matricule' => $candidater->getCandidat()->getMatricule()
+							];
+						}else{
+							$data = [
+								'apikey' => $apiKey,
+								'site_id' => $site_id,
+								'token' => $candidater->getToken()
+							];
+							
+							// Creation d'option
+							$options = [
+								'http' => [
+									'method' =>"POST",
+									'header' => "Content-Type: application/json\r\n",
+									//'ignore_errors' => true,
+									'content' => json_encode($data)
+								]
+							]; //dd($options);
+							
+							// Creation du context
+							$context = stream_context_create($options); //dd($context);
+							
+							// Execution de la requete
+							$result =  file_get_contents('https://api-checkout.cinetpay.com/v2/payment/check', false, $context);
+							
+							$donnee = json_decode($result); //dd($donnee);
+							if ($donnee->code === '00'){
+								
+								// Generation du code de dossier puis mise a jour de la table candidater
+								$candidater->setStatusPaiement('ACOMPTE');
+								$this->_em->flush();
+								
+								$this->_mail->acompte($candidater);
+							}
+						}
+					}
+					
+				} catch (\Exception $e){
+					echo "Erreur :". $e->getMessage();
+					$this->addFlash('danger', "Erreur : ".$e->getMessage());
+				}
+			}
+			
+			return $this->json($data);
+		}
+		
+		/**
 		 * @param $candidter
 		 * @return bool
 		 */
@@ -146,5 +218,10 @@
 			$this->_em->flush();
 			
 			return true;
+		}
+		
+		protected function mise_a_jour_acompte($candidater)
+		{
+		
 		}
 	}

@@ -125,13 +125,27 @@
 		}
 		
 		/**
-		 * Enregistrement de la table candidater
-		 *
+		 * @param $data
+		 * @return Candidater|mixed|object|null
+		 */
+		public function cinetpay_acompte($data)
+		{
+			$candidate = $this->_em->getRepository(Candidater::class)->findOneBy(['id'=>$data['candidate']]);
+			$candidate->setResponseIdAcompte($data['response_id']);
+			$candidate->setTokenAcompte($data['token']);
+			$candidate->setUrlAcompte($data['url']);
+			$this->_em->flush();
+			
+			return $candidate;
+		}
+		
+		/**
 		 * @param $request
 		 * @param $candidat
-		 * @return bool
+		 * @return Candidater
+		 * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
 		 */
-		public function validation($request, $candidat)
+		public function validation($request, $candidat): Candidater
 		{ //dd();
 			// Variables
 			//$id_transaction = time().''.substr(uniqid("",true), -9, 9);
@@ -141,7 +155,9 @@
 			$date = date('Y-m-d', time());
 			$activite = $this->_em->getRepository(Activite::class)->findEncours($date);
 			
-			$montant = $this->montantAPayer($activite->getMontant());
+			$acompte = (int)$activite->getMontant() / 2;
+			
+			$montant = $this->montantAPayer($acompte);
 			
 			// Gestion du numero de dossier
 			$nombre_candidat = count($this->_em->getRepository(Candidater::class)->findBy(['activite'=>$activite->getId()]));
@@ -153,7 +169,7 @@
 			$candidater->setIdTransaction($id_transaction);
 			$candidater->setStatusPaiement($status_paiement);
 			$candidater->setMontant($montant);
-			//$candidater->setCode($code);
+			$candidater->setAcompte($montant);
 			
 			$this->_em->persist($candidater);
 			$this->_em->flush();
@@ -161,9 +177,9 @@
 			$candidat->setFlag(5);
 			$this->_em->flush();
 			
-			$this->_mail->demande($candidater);
+			//$this->_mail->demande($candidater);
 			
-			return true;
+			return $candidater;
 		}
 		
 		/**
