@@ -90,7 +90,13 @@ class ValdiationController extends AbstractController
             "customer_id"=> $candidater->getCandidat()->getMatricule(),
             "customer_name" => $candidater->getCandidat()->getNom(),
             "customer_surname" => $candidater->getCandidat()->getPrenoms(),
-            "customer_city" => $candidater->getCandidat()->getRegion()->getNom()
+            "customer_city" => $candidater->getCandidat()->getRegion()->getNom(),
+			"channels" => "MOBILE_MONEY",
+			"invoice_data" => [
+				"Reste à payer" => $candidater->getMontant(),
+				"Matricule" => $candidater->getCandidat()->getMatricule(),
+				'Formation' => $candidater->getActivite()->getNom()
+			]
 		];
 		
 		$options = [
@@ -100,12 +106,14 @@ class ValdiationController extends AbstractController
 				//'ignore_errors' => true,
 				'content' => json_encode($parametres)
 			]
-		]; //dd($validation);
+		]; //dd($options);
 		$context = stream_context_create($options); //dd($context);
 		$result =  file_get_contents('https://api-checkout.cinetpay.com/v2/payment', false, $context);
 		$donnee = json_decode($result);
 		
-		if ($donnee->code === '201'){ //dd($candidater);
+		
+		
+		if ($donnee->code === '201'){ dd($donnee);
 			$data = [
 				'response_id' => $donnee->api_response_id,
                 'token' => $donnee->data->payment_token,
