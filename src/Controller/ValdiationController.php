@@ -111,9 +111,6 @@ class ValdiationController extends AbstractController
 		$result =  file_get_contents('https://api-checkout.cinetpay.com/v2/payment', false, $context);
 		$donnee = json_decode($result);
 		
-		dd($donnee);
-		
-		
 		if ($donnee->code === '201'){ //dd($donnee);
 			$data = [
 				'response_id' => $donnee->api_response_id,
@@ -123,6 +120,9 @@ class ValdiationController extends AbstractController
 			]; //dd($data);
 			
 			$this->_candidature->cinetpay_acompte($data);
+			
+			return $this->redirect($data['url']);
+			
 		}
 		
 		return $this->redirectToRoute('app_validation_index');
