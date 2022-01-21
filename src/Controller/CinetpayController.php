@@ -128,7 +128,7 @@
 		}
 		
 		/**
-		 * @Route("/notify/acompte", name="cinetpay_notify_acompte", methods={"GET","POST"})
+		 * @Route("/acompte/notify", name="cinetpay_notify_acompte", methods={"GET","POST"})
 		 */
 		public function notify_acompte(Request $request)
 		{
