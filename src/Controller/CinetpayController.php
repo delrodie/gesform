@@ -149,6 +149,7 @@
 					// Verification du statut de la candidature
 					//$adherant = $this->em->getRepository(Adherant::class)->findOneBy(['idtransaction'=>$cpmTransId]); //dd($adherant);
 					$candidater = $this->_em->getRepository(Candidater::class)->findOneBy(['idTransaction'=>$cpmTransId]);
+					dd($candidater);
 					if ($candidater){
 						if ($candidater->getStatusPaiement() === 'ACOMPTE'){
 							$data = [
