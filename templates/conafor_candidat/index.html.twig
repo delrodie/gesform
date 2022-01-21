@@ -61,6 +61,7 @@
                                         <th>FONCTION</th>
                                         <th>DATE D'ENTREE</th>
                                         <th>CONTACT</th>
+                                        <th>ACOMPTE</th>
                                         <th>ACTION</th>
                                     </tr>
                                     </thead>
@@ -76,6 +77,14 @@
                                             <td>{{ candidater.candidat.fonction|title }}</td>
                                             <td class="text-center">{{ candidater.candidat.dateEntree }}</td>
                                             <td>{{ candidater.candidat.contact }}</td>
+                                            <td class="text-center">
+                                                {% if candidater.statusPaiement == "ACOMPTE" %}
+                                                    <span class="badge badge-success">OUI</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger">NON</span>
+                                                {% endif %}
+
+                                            </td>
                                             <td class="text-center">
                                                 {% if not candidater.validation %}
                                                     <a href="{{ path('conafor_candidat_show', {'id': candidater.id}) }}" class="non-valide"><i class="far fa-edit"></i></a>
