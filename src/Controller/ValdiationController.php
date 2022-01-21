@@ -106,7 +106,7 @@ class ValdiationController extends AbstractController
 				//'ignore_errors' => true,
 				'content' => json_encode($parametres)
 			]
-		]; dd($options);
+		]; //dd($options);
 		$context = stream_context_create($options); //dd($context);
 		$result =  file_get_contents('https://api-checkout.cinetpay.com/v2/payment', false, $context);
 		$donnee = json_decode($result);
