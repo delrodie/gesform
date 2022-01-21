@@ -130,7 +130,7 @@
 		/**
 		 * @Route("/acompte/notify", name="cinetpay_notify_acompte", methods={"GET","POST"})
 		 */
-		public function notify_acompte(Request $request)
+		public function notify_acompte(Request $request): \Symfony\Component\HttpFoundation\JsonResponse
 		{
 			//Initialisation
 			$encoders = [new XmlEncoder(), new JsonEncoder()];
@@ -159,7 +159,7 @@
 							$data = [
 								'apikey' => $apiKey,
 								'site_id' => $site_id,
-								'token' => $candidater->getToken()
+								'token' => $candidater->getTokenAcompte()
 							];
 							
 							// Creation d'option
@@ -220,8 +220,5 @@
 			return true;
 		}
 		
-		protected function mise_a_jour_acompte($candidater)
-		{
 		
-		}
 	}
