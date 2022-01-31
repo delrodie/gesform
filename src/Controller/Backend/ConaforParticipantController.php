@@ -28,9 +28,16 @@ class ConaforParticipantController extends AbstractController
      */
     public function index(Request $request): Response
     {
+		$req = $request->get('search_activite');
+		if ($req){
+			$participants = $this->candidaterRepository->findParticipantByActiviteOrNo($req);
+		}else{
+			$participants = $this->candidaterRepository->findParticipantByActiviteOrNo();
+		}
+		
         return $this->render('conafor_participant/index.html.twig', [
             'activites' => $this->activiteRepository->findBy([],['id'=>"DESC"]),
-	        'participants' => $this->candidaterRepository->findParticipantByActiviteOrNo()
+	        'participants' => $participants
         ]);
     }
 }

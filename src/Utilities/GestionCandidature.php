@@ -244,9 +244,10 @@
 		public function fincance($activite=null)
 		{
 			$candidats = $this->_em->getRepository(Candidater::class)->findParticipantByActiviteOrNo($activite);
-			$data=[];$i=0; $montant_total=0;
+			$data=[];$i=0; $montant_total=0; $montant=0;
 			foreach ($candidats as $candidat){
 				$age = date('Y') - date('Y', strtotime($candidat->getCandidat()->getDateNaissance()));
+				$montant=(int) $candidat->getMontant() + (int) $candidat->getAcompte();
 				$data[$i++] = [
 					'code' => $candidat->getCode(),
 					'matricule' => $candidat->getCandidat()->getMatricule(),
@@ -263,7 +264,7 @@
 					'sexe' => $candidat->getCandidat()->getSexe(),
 					'photo' => $candidat->getCandidat()->getPhoto(),
 					'region' => $candidat->getCandidat()->getRegion()->getNom(),
-					'montant' => $candidat->getActivite()->getMontant(),
+					'montant' => $montant,
 					'contact' => $candidat->getCandidat()->getContact(),
 					'fonction' => $candidat->getCandidat()->getFonction(),
 					'age' => $age

@@ -26,7 +26,9 @@ class ConaforFinanceController extends AbstractController
      */
     public function index(Request $request): Response
     {
-		$data = $this->_candidature->fincance(); //dd($data);
+		$req = $request->get('search_activite');
+		if (!$req) $req=null;
+		$data = $this->_candidature->fincance($req);
         return $this->render('conafor_finance/index.html.twig', [
             'participants' => $data['participant'],
             'montant' => $data['total'],

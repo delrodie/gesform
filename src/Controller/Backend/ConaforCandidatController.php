@@ -33,10 +33,10 @@ class ConaforCandidatController extends AbstractController
 		//dd($request);
 		$req = $request->get('search_activite');
 		$req_validation = $request->get('search_validation');
-		if (!$req_validation) $validation = false;
+		if (!$req_validation) $validation = null;
 		else $validation = 1;
-		if ($req){ //dd($validation);
-			$candidaters = $candidaterRepository->findByValidationAndActiviteOrNo($validation, $req);
+		if ($req){ //dd($req);
+			$candidaters = $candidaterRepository->findByValidationAndActiviteOrNo($req);
 		}else{
 			$candidaters = $candidaterRepository->findByValidationAndActiviteOrNo();
 		}

@@ -26,8 +26,8 @@ class CandidaterRepository extends ServiceEntityRepository
 	 * @param null $activite
 	 * @return int|mixed|string
 	 */
-	public function findByValidationAndActiviteOrNo($validation=null, $activite=null)
-	{ //dd($validation);
+	public function findByValidationAndActiviteOrNo($activite=null)
+	{ //dd($activite);
 		$query = $this->createQueryBuilder('c')
 			->addSelect('ca')
 			->addSelect('a')
@@ -38,15 +38,9 @@ class CandidaterRepository extends ServiceEntityRepository
 			;
 		if ($activite){
 			$query->where('a.id = :activite')
-				->andWhere('c.validation = :validation')
-				->setParameters([
-					'activite'=> $activite,
-					'validation' => $validation
-				]);
-		}elseif ($validation){
-			$query->where('c.validation = :validation')
-				->setParameter('validation', $validation);
+				->setParameter('activite', $activite);
 		}
+		
 		return $query->getQuery()->getResult();
 	}
 	

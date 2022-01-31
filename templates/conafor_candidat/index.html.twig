@@ -22,7 +22,7 @@
                             <div class="col-md-10 offset-md-1 text-center">
                                 <form action="{{ path('conafor_candidat_index') }}" method="post">
                                     <div class="row">
-                                        <div class="col-3">Filtrez la liste</div>
+                                        <div class="col-4 text-end">Filtrez la liste</div>
                                         <div class="col-4">
                                             <select name="search_activite" id="" class="form-control">
                                                 <option value="">-- Selectionnez l'activité --</option>
@@ -30,14 +30,6 @@
                                                 {% for activite in activites %}
                                                     <option value="{{ activite.id }}">{{ activite.nom }}</option>
                                                 {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="col-3">
-                                            <select name="search_validation" id="" class="form-control">
-                                                <option value="">-- Selectionnez le statut --</option>
-                                                <option value=""></option>
-                                                <option value="true">VALIDE</option>
-                                                <option value="">NON VALIDE</option>
                                             </select>
                                         </div>
                                         <div class="col-2">
