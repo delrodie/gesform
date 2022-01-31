@@ -105,12 +105,14 @@ class CandidaterRepository extends ServiceEntityRepository
 		if ($activite){
 			$query->where('a.id = :activite')
 				->andWhere('c.statusPaiement = :status')
+				->orWhere('c.acompte IS NOT NULL')
 				->setParameters([
 					'activite'=> $activite,
-					'status' => 'VALIDE'
+					'status' => 'VALIDE',
 				]);
 		}else{
 			$query->where('c.statusPaiement = :status')
+				->orWhere('c.acompte IS NOT NULL')
 				->setParameter('status', 'VALIDE');
 		}
 		return $query->getQuery()->getResult();

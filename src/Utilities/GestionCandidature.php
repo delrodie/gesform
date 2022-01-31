@@ -247,7 +247,7 @@
 			$data=[];$i=0; $montant_total=0; $montant=0;
 			foreach ($candidats as $candidat){
 				$age = date('Y') - date('Y', strtotime($candidat->getCandidat()->getDateNaissance()));
-				$montant=(int) $candidat->getMontant() + (int) $candidat->getAcompte();
+				$montant=(int) $candidat->getMontant() + (int) $candidat->getAcompte(); //dd($montant);
 				$data[$i++] = [
 					'code' => $candidat->getCode(),
 					'matricule' => $candidat->getCandidat()->getMatricule(),
@@ -269,7 +269,7 @@
 					'fonction' => $candidat->getCandidat()->getFonction(),
 					'age' => $age
 				];
-				$montant_total = $montant_total + (int) $candidat->getActivite()->getMontant();
+				$montant_total = $montant_total + $montant;
 			}
 			$result = [
 				'participant' => $data,
