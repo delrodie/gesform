@@ -247,7 +247,12 @@
 			$data=[];$i=0; $montant_total=0; $montant=0;
 			foreach ($candidats as $candidat){
 				$age = date('Y') - date('Y', strtotime($candidat->getCandidat()->getDateNaissance()));
-				$montant=(int) $candidat->getMontant() + (int) $candidat->getAcompte(); //dd($montant);
+				
+				if ($candidat->getStatusPaiement() === 'VALIDE')
+					$montant=(int) $candidat->getMontant() + (int) $candidat->getAcompte(); //dd($montant);
+				else
+					$montant = (int) $candidat->getAcompte();
+				
 				$data[$i++] = [
 					'code' => $candidat->getCode(),
 					'matricule' => $candidat->getCandidat()->getMatricule(),
