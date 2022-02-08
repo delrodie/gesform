@@ -6,6 +6,7 @@
 	use App\Entity\Sygesca\Membre;
 	use App\Utilities\GestionActivite;
 	use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+	use Symfony\Component\HttpFoundation\Request;
 	use Symfony\Component\Routing\Annotation\Route;
 	use Symfony\Component\Serializer\Encoder\JsonEncoder;
 	use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -43,21 +44,25 @@
 		/**
 		 * @Route("/{matricule}/paiement", name="requete_ajax_paiment", methods={"GET"})
 		 */
-		public function paiement($matricule)
+		public function paiement(Request $request, $matricule)
 		{
 			//Initialisation
 			$encoders = [new XmlEncoder(), new JsonEncoder()];
 			$normalizers = [new ObjectNormalizer()];
 			$serializer = new Serializer($normalizers, $encoders);
 			
+			$id_transaction = time().''.substr(uniqid("",true), -9, 5); //dd($id_transaction);
+			
 			$candidater = $this->getDoctrine()->getRepository(Candidater::class)->findOneByMatricule($matricule);
 			
 			$data=[];
 			if ($candidater){
+				if (!$candidater->getIdTransactionSolde()) $idTransaction = $id_transaction;
+				else $idTransaction = $candidater->getIdTransactionSolde();
 				$data = [
 					'nom' => $candidater->getCandidat()->getNom(),
 					'prenoms' => $candidater->getCandidat()->getPrenoms(),
-					'id_transaction' => $candidater->getIdTransaction(),
+					'id_transaction' => $idTransaction,
 					'montant' => $candidater->getMontant(),
 					'matricule' => $candidater->getCandidat()->getMatricule(),
 					'region' => $candidater->getCandidat()->getRegion()->getNom(),

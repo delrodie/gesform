@@ -118,6 +118,11 @@ class Candidater
      */
     private $responseId_acompte;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $IdTransactionSolde;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -272,17 +277,17 @@ class Candidater
 	 * @ORM\PrePersist
 	 */
 	public function setCreatedAtValue(): \DateTime
-                                        {
-                                           return $this->createdAt = new \DateTime();
-                                        }
+                                                 {
+                                                    return $this->createdAt = new \DateTime();
+                                                 }
 	
 	/**
 	 * @ORM\PreUpdate
 	 */
 	public function setUpdatedAtValue(): \DateTime
-                                    	{
-                                    		return $this->updatedAt = new \DateTime();
-                                    	}
+                                             	{
+                                             		return $this->updatedAt = new \DateTime();
+                                             	}
 
     public function getCandidat(): ?Candidat
     {
@@ -376,6 +381,18 @@ class Candidater
     public function setResponseIdAcompte(string $responseId_acompte): self
     {
         $this->responseId_acompte = $responseId_acompte;
+
+        return $this;
+    }
+
+    public function getIdTransactionSolde(): ?string
+    {
+        return $this->IdTransactionSolde;
+    }
+
+    public function setIdTransactionSolde(?string $IdTransactionSolde): self
+    {
+        $this->IdTransactionSolde = $IdTransactionSolde;
 
         return $this;
     }
